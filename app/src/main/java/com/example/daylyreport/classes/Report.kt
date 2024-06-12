@@ -1,0 +1,14 @@
+package com.example.daylyreport.classes
+
+data class Report (
+    //Наименование строительного объекта, из списка строительных объектов (таблица в БД)
+    val constructionObject: String,
+    //Дата начала производства работ (вспомнить установку даты и времени в Android, было занятие)
+    val dateOfWork: String,
+    //Поле, содержащее информацию о месте производства работ
+    val location: Location,
+    //Поле с видом работ, содержит информацию о количестве и затратах при ее выполнении
+    val typeOfWork: List<TypeOfWork>,
+    //Поле с производителем работ
+    val foreman: Foreman
+)
