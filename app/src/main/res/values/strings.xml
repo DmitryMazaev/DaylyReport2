@@ -29,6 +29,10 @@
     <string name="material_edit_text">нажмите, чтобы выбрать материал</string>
     <string name="quantity_of_work_edit_text">введите количество работы</string>
     <string name="quantity_of_material_edit_text">введите количество материала</string>
+    <string name="transport_vehicle_text">Выберите транспортное средство:</string>
+    <string name="transport_vehicle_edit_text">нажмите, чтобы выбрать транспортное средство</string>
+    <string name="quantity_of_transport_vehicle_text">Время работы транспортного средства:</string>
+    <string name="quantity_of_transport_vehicle_edit_text">введите время работы транспортного средства</string>
 
 
 
