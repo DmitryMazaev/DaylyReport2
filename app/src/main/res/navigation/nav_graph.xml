@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.example.daylyreport.FirstFragment"
+        android:name="com.example.daylyreport.ReportFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/fragment_report">
     </fragment>
 
 </navigation>
