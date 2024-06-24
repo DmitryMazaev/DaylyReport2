@@ -22,5 +22,15 @@
     <string name="plus">+</string>
     <string name="location_comment">Примечание:</string>
     <string name="location_comment_hint">Развязка, съезд, местоположение и др.</string>
+    <string name="button_add_new_material_text">ДОБАВИТЬ МАТЕРИАЛ</string>
+    <string name="quantity_of_work_text">Количество работы:</string>
+    <string name="quantity_of_material_text">Количество материала:</string>
+    <string name="new_material_text">Выберите материал:</string>
+    <string name="material_edit_text">нажмите, чтобы выбрать материал</string>
+    <string name="quantity_of_work_edit_text">введите количество работы</string>
+    <string name="quantity_of_material_edit_text">введите количество материала</string>
 
+
+
+    quantity_of_work_text
 </resources>
