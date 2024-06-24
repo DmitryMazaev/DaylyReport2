@@ -9,10 +9,18 @@
     <string name="construction_object_text">Наименование строительного объекта:</string>
     <string name="typical_work_text">Выберите вид работ:</string>
     <string name="construction_object_edit_text">нажмите, чтобы выбрать объект из списка</string>
-    <string name="typical_work_edit_text">нажмите, чтобы выбрать работу из списка</string>
+    <string name="typical_work_edit_text">нажмите, чтобы выбрать работу</string>
     <string name="button_date_and_time_text">ДОБАВИТЬ ДАТУ И ВРЕМЯ НАЧАЛА СМЕНЫ</string>
     <string name="date_text">Дата:</string>
     <string name="time_text">Время:</string>
     <string name="from_date_text">XX.XX.XXXX</string>
     <string name="from_time_text">XX:XX</string>
+    <string name="button_add_new_work_text">ДОБАВИТЬ НОВУЮ РАБОТУ</string>
+    <string name="location_start_text">Начало производства работ:</string>
+    <string name="location_end_text">Окончание производства работ:</string>
+    <string name="pk">ПК</string>
+    <string name="plus">+</string>
+    <string name="location_comment">Примечание:</string>
+    <string name="location_comment_hint">Развязка, съезд, местоположение и др.</string>
+
 </resources>
