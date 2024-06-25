@@ -95,5 +95,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/new_work_recycler_view"/>
+        <Button
+            style="@style/button_style"
+            android:id="@+id/button_add_new_report"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_add_new_report_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_add_new_work"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

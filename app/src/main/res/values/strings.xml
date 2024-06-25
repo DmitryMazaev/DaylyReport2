@@ -33,6 +33,7 @@
     <string name="transport_vehicle_edit_text">нажмите, чтобы выбрать транспортное средство</string>
     <string name="quantity_of_transport_vehicle_text">Время работы транспортного средства:</string>
     <string name="quantity_of_transport_vehicle_edit_text">введите время работы транспортного средства</string>
+    <string name="button_add_new_report_text">ДОБАВИТЬ ОТЧЕТ</string>
 
 
 

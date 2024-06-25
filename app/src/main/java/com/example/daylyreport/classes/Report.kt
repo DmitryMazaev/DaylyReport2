@@ -5,10 +5,12 @@ data class Report (
     val constructionObject: String,
     //Дата начала производства работ (вспомнить установку даты и времени в Android, было занятие)
     val dateOfWork: String,
+    //Время начала производства работ (вспомнить установку даты и времени в Android, было занятие)
+    val timeOfWork: String,
     //Поле с видом работ, содержит информацию о количестве и затратах при ее выполнении
-    val typeOfWork: List<TypeOfWork>,
+    val typeOfWorkList: List<TypeOfWork>?,
     //Поле с производителем работ
-    val foreman: Foreman,
+    val foreman: Foreman?,
     //Является ли сменный отчет откорректированным (false - нет, true - да)
-    val isAmendedReport: Boolean
+    val isAmendedReport: Boolean?
 )

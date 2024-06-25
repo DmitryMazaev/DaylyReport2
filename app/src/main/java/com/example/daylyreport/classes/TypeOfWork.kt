@@ -6,9 +6,9 @@ data class TypeOfWork (
     //Поле, содержащее информацию о месте производства работ
     val location: Location,
     //Список материалов
-    val material: List<Material>,
+    val materialList: List<Material>,
     //Список транспортных средств
-    val transportVehicle: List<TransportVehicle>,
+    val transportVehicleList: List<TransportVehicle>,
     //Список работников
-    val personnel: List<Personnel>
+    val personnelList: List<Personnel>
 )

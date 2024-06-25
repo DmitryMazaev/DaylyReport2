@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import com.example.daylyreport.classes.Report
+import com.example.daylyreport.classes.ReportViewModel
 import com.example.daylyreport.databinding.FragmentReportBinding
 
 /**
@@ -17,6 +20,7 @@ class ReportFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private val viewModel: ReportViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +33,18 @@ class ReportFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        binding.buttonAddNewReport.setOnClickListener {
+            val constructionObject: String = binding.constructionObjectEditTextForEnter.text.toString()
+            val report = Report(
+                constructionObject,
+                "24.06.2024",
+                "08:00",
+                null,
+                null,
+                null)
+            viewModel.addNewReport(report)
+        }
     }
 
     override fun onDestroyView() {
