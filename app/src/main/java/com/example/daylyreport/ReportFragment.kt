@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.daylyreport.adapter.ItemTypeOfWork
@@ -26,12 +27,7 @@ class ReportFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private val viewModel: ReportViewModel by viewModels()
-    private val items = mutableListOf<ItemTypeOfWork>()
-    private lateinit var recyclerView: RecyclerView
     private val typeOfWorkAdapter = TypeOfWorkAdapter()
-    val data:ArrayList<TypeOfWork> = ArrayList()
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,9 +50,9 @@ class ReportFragment : Fragment() {
                 null,
                 null)
             viewModel.addNewReport(report)
+            findNavController().navigate(R.id.action_ReportFragment_to_ListReportFragment)
         }
         binding.buttonAddNewWork.setOnClickListener {
-            //data.add(TypeOfWork(null,null, null, null, null))
             binding.newWorkRecyclerView.layoutManager = LinearLayoutManager(requireContext())
             binding.newWorkRecyclerView.adapter = typeOfWorkAdapter
             typeOfWorkAdapter.setData()

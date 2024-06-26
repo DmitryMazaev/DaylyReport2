@@ -36,6 +36,10 @@
     <string name="button_add_new_report_text">ДОБАВИТЬ ОТЧЕТ</string>
     <string name="list_report_text">Сменные отчеты:</string>
     <string name="button_new_report">НОВЫЙ ОТЧЕТ</string>
+    <string name="key_report_text">Номер отчета: </string>
+    <string name="date_of_report_text">Дата: </string>
+    <string name="object_text">Объект: </string>
+    <string name="foreman_text">Исполнитель: </string>
 
 
 
