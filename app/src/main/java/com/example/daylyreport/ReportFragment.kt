@@ -15,6 +15,10 @@ import com.example.daylyreport.classes.Report
 import com.example.daylyreport.classes.ReportViewModel
 import com.example.daylyreport.classes.TypeOfWork
 import com.example.daylyreport.databinding.FragmentReportBinding
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -28,6 +32,7 @@ class ReportFragment : Fragment() {
     private val binding get() = _binding!!
     val viewModel: ReportViewModel by viewModels()
     private val typeOfWorkAdapter = TypeOfWorkAdapter()
+    private val calendar = Calendar.getInstance()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,12 +44,15 @@ class ReportFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.buttonDate.setOnClickListener {
+            enterDate()
 
+        }
         binding.buttonAddNewReport.setOnClickListener {
             val constructionObject: String = binding.constructionObjectEditTextForEnter.text.toString()
             val report = Report(
                 constructionObject,
-                "24.06.2024",
+                binding.dateFromDateAndTime.text.toString(),
                 "08:00",
                 null,
                 null,
@@ -58,4 +66,17 @@ class ReportFragment : Fragment() {
             typeOfWorkAdapter.setData()
             }
         }
+    private fun enterDate() {
+        val dateDialog = MaterialDatePicker.Builder.datePicker()
+            .build()
+
+        dateDialog.addOnPositiveButtonClickListener {timeInMillis ->
+            calendar.timeInMillis = timeInMillis
+            val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+            Snackbar.make(binding.buttonDate, dateFormat.format(calendar.time), Snackbar.LENGTH_SHORT).show()
+            binding.dateFromDateAndTime.text = dateFormat.format(calendar.time)
+        }
+        dateDialog.show(parentFragmentManager, "DatePicker")
     }
+    }
+

@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/element_list_report_recycler">
+    android:id="@+id/element_list_report_recycler"
+    >
     <TextView
         style="@style/heading_report_style"
         android:id="@+id/key_dayly_report_text"
