@@ -27,7 +27,7 @@
             android:text="@string/list_report_text"
             />
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/new_work_recycler_view"
+            android:id="@+id/report_list_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

@@ -26,7 +26,7 @@ class ReportFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private val viewModel: ReportViewModel by viewModels()
+    val viewModel: ReportViewModel by viewModels()
     private val typeOfWorkAdapter = TypeOfWorkAdapter()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
