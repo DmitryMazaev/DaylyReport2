@@ -3,13 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/ListReportFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.example.daylyreport.ReportFragment"
-        android:label="@string/first_fragment_label"
+        android:id="@+id/ListReportFragment"
+        android:name="com.example.daylyreport.ListReportFragment"
+        android:label="@string/list_report_fragment_label"
         tools:layout="@layout/fragment_report">
+        <action
+            android:id="@+id/action_ListReportFragment_to_ReportFragment"
+            app:destination="@+id/ReportFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/ReportFragment"
+        android:name="com.example.daylyreport.ReportFragment"
+        android:label="@string/report_fragment_label"
+        tools:layout="@layout/fragment_list_report">
+        <action
+            android:id="@+id/action_ReportFragment_to_ListReportFragment"
+            app:destination="@+id/ListReportFragment"/>
     </fragment>
 
 </navigation>

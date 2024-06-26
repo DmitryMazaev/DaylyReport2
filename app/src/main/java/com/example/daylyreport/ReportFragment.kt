@@ -6,8 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.daylyreport.adapter.ItemTypeOfWork
+import com.example.daylyreport.adapter.TypeOfWorkAdapter
 import com.example.daylyreport.classes.Report
 import com.example.daylyreport.classes.ReportViewModel
+import com.example.daylyreport.classes.TypeOfWork
 import com.example.daylyreport.databinding.FragmentReportBinding
 
 /**
@@ -21,6 +26,11 @@ class ReportFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private val viewModel: ReportViewModel by viewModels()
+    private val items = mutableListOf<ItemTypeOfWork>()
+    private lateinit var recyclerView: RecyclerView
+    private val typeOfWorkAdapter = TypeOfWorkAdapter()
+    val data:ArrayList<TypeOfWork> = ArrayList()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,10 +55,11 @@ class ReportFragment : Fragment() {
                 null)
             viewModel.addNewReport(report)
         }
+        binding.buttonAddNewWork.setOnClickListener {
+            //data.add(TypeOfWork(null,null, null, null, null))
+            binding.newWorkRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+            binding.newWorkRecyclerView.adapter = typeOfWorkAdapter
+            typeOfWorkAdapter.setData()
+            }
+        }
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-}
