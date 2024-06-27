@@ -1,4 +1,4 @@
-package com.example.daylyreport.classes
+package com.example.daylyreport.entitys
 
 //Производитель работ
 data class Foreman (

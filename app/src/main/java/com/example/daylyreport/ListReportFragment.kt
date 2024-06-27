@@ -5,10 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.daylyreport.adapter.ElementReportAdapter
-import com.example.daylyreport.classes.Report
+import com.example.daylyreport.classes.ListReportViewModel
+import com.example.daylyreport.entitys.Report
 import com.example.daylyreport.databinding.FragmentListReportBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -24,6 +26,7 @@ class ListReportFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var reportList: ArrayList<Report>
     private val firebase = FirebaseDatabase.getInstance().getReference("reportList")
+    private val viewModel: ListReportViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -37,7 +40,7 @@ class ListReportFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         reportList = arrayListOf()
-        fetchData()
+        viewModel.fetchData(binding)
         binding.reportListRecyclerView.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(this.context)
@@ -46,23 +49,5 @@ class ListReportFragment : Fragment() {
             findNavController().navigate(R.id.action_ListReportFragment_to_ReportFragment)
         }
     }
-    private fun fetchData() {
-        firebase.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                reportList.clear()
-                if (snapshot.exists()) {
-                    for (reportOne in snapshot.children) {
-                        val report = reportOne.getValue(Report::class.java)
-                        reportList.add(report!!)
-                    }
-                }
-                val elementReportAdapter = ElementReportAdapter (reportList)
-                binding.reportListRecyclerView.adapter = elementReportAdapter
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-        })
-    }
 }

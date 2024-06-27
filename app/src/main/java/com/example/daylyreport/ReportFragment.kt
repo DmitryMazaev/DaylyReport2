@@ -1,6 +1,5 @@
 package com.example.daylyreport
 
-import android.app.TimePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,17 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.daylyreport.adapter.ItemTypeOfWork
 import com.example.daylyreport.adapter.TypeOfWorkAdapter
-import com.example.daylyreport.classes.Report
 import com.example.daylyreport.classes.ReportViewModel
-import com.example.daylyreport.classes.TypeOfWork
 import com.example.daylyreport.databinding.FragmentReportBinding
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.TimeFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
@@ -49,19 +42,8 @@ class ReportFragment : Fragment() {
 
         binding.buttonDate.setOnClickListener {
             enterDate()
-
         }
         binding.buttonAddNewReport.setOnClickListener {
-            val constructionObject: String = binding.constructionObjectEditTextForEnter.text.toString()
-            /*val report = Report(
-                "id",
-                constructionObject,
-                binding.dateFromDateAndTime.text.toString(),
-                "08:00",
-                null,
-                null,
-                null)
-            viewModel.addNewReport(report)*/
             viewModel.addNewReportAlt(binding)
             findNavController().navigate(R.id.action_ReportFragment_to_ListReportFragment)
         }

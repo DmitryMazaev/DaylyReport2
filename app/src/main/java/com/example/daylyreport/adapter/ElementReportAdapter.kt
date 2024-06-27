@@ -3,7 +3,7 @@ package com.example.daylyreport.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.daylyreport.classes.Report
+import com.example.daylyreport.entitys.Report
 import com.example.daylyreport.databinding.ElementListReportItemBinding
 
 class ElementReportAdapter(private val reportList: ArrayList<Report>): RecyclerView.Adapter<ElementReportAdapter.ViewHolder>() {

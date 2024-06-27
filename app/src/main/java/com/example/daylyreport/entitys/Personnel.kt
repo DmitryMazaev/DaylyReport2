@@ -1,4 +1,4 @@
-package com.example.daylyreport.classes
+package com.example.daylyreport.entitys
 
 //Класс Персонал
 data class Personnel (

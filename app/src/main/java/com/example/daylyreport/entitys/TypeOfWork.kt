@@ -1,4 +1,4 @@
-package com.example.daylyreport.classes
+package com.example.daylyreport.entitys
 //Класс вида работ с затратами и их количеством
 data class TypeOfWork (
     //Вид работы

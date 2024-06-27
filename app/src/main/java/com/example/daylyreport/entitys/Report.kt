@@ -1,7 +1,4 @@
-package com.example.daylyreport.classes
-
-import android.os.Parcel
-import android.os.Parcelable
+package com.example.daylyreport.entitys
 
 data class Report (
     val reportId: String? = "",
