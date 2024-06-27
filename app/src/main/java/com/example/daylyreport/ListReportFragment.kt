@@ -56,7 +56,7 @@ class ListReportFragment : Fragment() {
                         reportList.add(report!!)
                     }
                 }
-                val elementReportAdapter = ElementReportAdapter(reportList)
+                val elementReportAdapter = ElementReportAdapter (reportList)
                 binding.reportListRecyclerView.adapter = elementReportAdapter
             }
 

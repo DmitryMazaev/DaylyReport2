@@ -9,13 +9,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/quiz_fragment">
+        android:id="@+id/quiz_fragment"
+        android:weightSum="2">
+        <TextView
+            style="@style/heading_report_style"
+            android:id="@+id/report_id_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/report_id_text"
+            />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/edit_text_report_style"
+            android:id="@+id/report_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/report_id_text"
+            app:layout_constraintStart_toStartOf="@+id/report_id_text"
+            app:layout_constraintEnd_toEndOf="@+id/report_id_text"
+            app:endIconMode="clear_text">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/report_id_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
         <TextView
             style="@style/heading_report_style"
             android:id="@+id/construction_object_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/report_id"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/construction_object_text"
@@ -36,22 +62,47 @@
                 android:layout_height="wrap_content"
                 />
         </com.google.android.material.textfield.TextInputLayout>
-        <Button
-            style="@style/button_style"
-            android:id="@+id/buttonDate"
+        <LinearLayout
+            android:id="@+id/button_gpoup"
+            android:orientation="horizontal"
+            android:baselineAligned="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/button_date_and_time_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/construction_object_edit_text"/>
+            app:layout_constraintTop_toBottomOf="@+id/construction_object_edit_text">
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5">
+            <Button
+                style="@style/button_style"
+                android:id="@+id/buttonDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_date_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5">
+            <Button
+                android:id="@+id/buttonTime"
+                style="@style/button_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_time_text"
+                app:layout_constraintStart_toStartOf="parent" />
+        </RelativeLayout>
+        </LinearLayout>
         <TextView
             android:id="@+id/date_text"
             style="@style/heading_report_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@+id/buttonDate"
-            app:layout_constraintTop_toBottomOf="@+id/buttonDate"
+            app:layout_constraintStart_toStartOf="@+id/button_gpoup"
+            app:layout_constraintTop_toBottomOf="@+id/button_gpoup"
             android:text="@string/date_text"/>
         <TextView
             android:id="@+id/date_from_date_and_time"
@@ -67,14 +118,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toStartOf="@+id/time_from_date_and_time"
-            app:layout_constraintTop_toBottomOf="@+id/buttonDate"
-            android:text="@string/date_text"/>
+            app:layout_constraintTop_toBottomOf="@+id/button_gpoup"
+            android:text="@string/time_text"/>
         <TextView
             android:id="@+id/time_from_date_and_time"
             style="@style/edit_text_report_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@+id/buttonDate"
+            app:layout_constraintEnd_toEndOf="@+id/button_gpoup"
             app:layout_constraintBottom_toBottomOf="@+id/date_text"
             android:text="@string/from_time_text"/>
         <androidx.recyclerview.widget.RecyclerView

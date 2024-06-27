@@ -6,11 +6,13 @@
     <string name="report_fragment_label">СМЕННЫЙ ОТЧЕТ (НОВЫЙ)</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="report_id_text">Номер сменного отчета: </string>
     <string name="construction_object_text">Наименование строительного объекта:</string>
     <string name="typical_work_text">Выберите вид работ:</string>
     <string name="construction_object_edit_text">нажмите, чтобы выбрать объект из списка</string>
     <string name="typical_work_edit_text">нажмите, чтобы выбрать работу</string>
-    <string name="button_date_and_time_text">ДОБАВИТЬ ДАТУ И ВРЕМЯ НАЧАЛА СМЕНЫ</string>
+    <string name="button_date_text">ДАТА НАЧАЛА СМЕНЫ</string>
+    <string name="button_time_text">ВРЕМЯ НАЧАЛА СМЕНЫ</string>
     <string name="date_text">Дата:</string>
     <string name="time_text">Время:</string>
     <string name="from_date_text">XX.XX.XXXX</string>
