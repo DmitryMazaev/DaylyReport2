@@ -93,25 +93,18 @@ class MaterialView @JvmOverloads constructor(
     a: Int = 0
 ) : FrameLayout(context, attrSet, a) {
 
-    private var _view: View? = null
-
     val materialId = ""
 
+    val binding: NewMaterialItemBinding
     init {
-        _view = inflate(context, R.layout.new_material_item, this)
+        binding = NewMaterialItemBinding.inflate(LayoutInflater.from(context), this, true)
     }
 
-    private val binding by lazy { _view?.let { NewMaterialItemBinding.bind(it) } }
-
-    val textView by lazy { findViewById<TextInputEditText>(R.id.material_edit_text_for_enter) }
-
     fun setALlText(text: String) {
-        try { binding?.materialEditTextForEnter?.setText(text) } catch (e: Exception) {
-            textView.setText(text + " catch")
-        }
+        binding.materialEditTextForEnter.setText(text)
     }
 
     fun getMaterialName(): String {
-        return textView.text.toString()
+        return  binding.materialEditTextForEnter.text.toString()
     }
 }
