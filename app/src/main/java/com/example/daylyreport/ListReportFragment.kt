@@ -24,8 +24,6 @@ class ListReportFragment : Fragment() {
 
     private var _binding: FragmentListReportBinding? = null
     private val binding get() = _binding!!
-    private lateinit var reportList: ArrayList<Report>
-    private val firebase = FirebaseDatabase.getInstance().getReference("reportList")
     private val viewModel: ListReportViewModel by viewModels()
 
 
@@ -39,7 +37,6 @@ class ListReportFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        reportList = arrayListOf()
         viewModel.fetchData(binding)
         binding.reportListRecyclerView.apply {
             setHasFixedSize(true)

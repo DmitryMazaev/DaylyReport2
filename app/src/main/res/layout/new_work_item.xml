@@ -194,15 +194,14 @@
                 android:layout_height="wrap_content"
                 />
         </com.google.android.material.textfield.TextInputLayout>
-        <androidx.recyclerview.widget.RecyclerView
+        <LinearLayout
             android:id="@+id/new_material_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/quantity_of_work_edit_text"
-            android:layout_marginVertical="10dp" />
+            android:layout_marginVertical="10dp"/>
         <Button
             style="@style/button_style"
             android:id="@+id/button_add_new_work"

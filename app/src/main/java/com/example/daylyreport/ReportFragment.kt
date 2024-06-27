@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.daylyreport.adapter.TypeOfWorkAdapter
 import com.example.daylyreport.classes.ReportViewModel
@@ -37,11 +38,14 @@ class ReportFragment : Fragment() {
         return binding.root
     }
 
+    val args by navArgs<ReportFragmentArgs>()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+       // viewModel.load(args.id)
 
         binding.buttonDate.setOnClickListener {
-            enterDate()
+            viewModel.enterDate(binding, parentFragmentManager)
         }
         binding.buttonAddNewReport.setOnClickListener {
             viewModel.addNewReportAlt(binding)
@@ -53,17 +57,6 @@ class ReportFragment : Fragment() {
             typeOfWorkAdapter.setData()
         }
     }
-    private fun enterDate() {
-        val dateDialog = MaterialDatePicker.Builder.datePicker()
-            .build()
 
-        dateDialog.addOnPositiveButtonClickListener {timeInMillis ->
-            calendar.timeInMillis = timeInMillis
-            val dateFormat = SimpleDateFormat("dd-MM-yyyy")
-            Snackbar.make(binding.buttonDate, dateFormat.format(calendar.time), Snackbar.LENGTH_SHORT).show()
-            binding.dateFromDateAndTime.text = dateFormat.format(calendar.time)
-        }
-        dateDialog.show(parentFragmentManager, "DatePicker")
-    }
 }
 

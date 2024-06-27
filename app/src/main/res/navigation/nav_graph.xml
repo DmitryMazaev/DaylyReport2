@@ -19,6 +19,9 @@
         android:name="com.example.daylyreport.ReportFragment"
         android:label="@string/report_fragment_label"
         tools:layout="@layout/fragment_list_report">
+        <argument android:name="id"
+            app:argType="string"
+            app:nullable="true"/>
         <action
             android:id="@+id/action_ReportFragment_to_ListReportFragment"
             app:destination="@+id/ListReportFragment"/>
