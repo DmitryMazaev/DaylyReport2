@@ -43,7 +43,7 @@ class ReportFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       // viewModel.load(args.id)
+        // viewModel.load(args.id)
 
         binding.buttonDate.setOnClickListener {
             viewModel.enterDate(binding, parentFragmentManager)
@@ -56,6 +56,10 @@ class ReportFragment : Fragment() {
             binding.newWorkRecyclerView.layoutManager = LinearLayoutManager(requireContext())
             binding.newWorkRecyclerView.adapter = typeOfWorkAdapter
             typeOfWorkAdapter.setData()
+        }
+
+        binding.buttonUpdateReport.setOnClickListener {
+            viewModel.updateReport(binding, args)
         }
 
     }

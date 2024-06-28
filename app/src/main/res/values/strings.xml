@@ -4,6 +4,7 @@
     <!-- Strings used for fragments for navigation -->
     <string name="list_report_fragment_label">СМЕННЫЕ ОТЧЕТ</string>
     <string name="report_fragment_label">СМЕННЫЙ ОТЧЕТ (НОВЫЙ)</string>
+    <string name="update_report_fragment_label">СМЕННЫЙ ОТЧЕТ (РЕДАКТИРОВАНИЕ)</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="report_id_text">Номер сменного отчета: </string>
@@ -36,6 +37,7 @@
     <string name="quantity_of_transport_vehicle_text">Время работы транспортного средства:</string>
     <string name="quantity_of_transport_vehicle_edit_text">введите время работы транспортного средства</string>
     <string name="button_add_new_report_text">ДОБАВИТЬ ОТЧЕТ</string>
+    <string name="button_update_report_text">ОБНОВИТЬ ОТЧЕТ</string>
     <string name="list_report_text">Сменные отчеты:</string>
     <string name="button_new_report">НОВЫЙ ОТЧЕТ</string>
     <string name="key_report_text">Номер отчета: </string>

@@ -37,7 +37,10 @@ class ElementReportAdapter(private val reportList: ArrayList<Report>): RecyclerV
             binding.foreman.text = "прораб"
             binding.elementListReportRecycler.setOnClickListener {
                 val action = ListReportFragmentDirections.actionListReportFragmentToReportFragment(
-                    item.reportId
+                    item.reportId.toString(),
+                    item.dateOfWork.toString(),
+                    item.constructionObject.toString(),
+                    item.foreman.toString()
                 )
                 holder.itemView.findNavController().navigate(action)
             }

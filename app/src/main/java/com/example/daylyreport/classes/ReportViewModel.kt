@@ -3,6 +3,7 @@ package com.example.daylyreport.classes
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.daylyreport.ReportFragmentArgs
 import com.example.daylyreport.databinding.FragmentReportBinding
 import com.example.daylyreport.entitys.Report
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -41,6 +42,16 @@ class ReportViewModel: ViewModel() {
             firebase.child(reportId).setValue(report)
         }
     }
+
+    fun updateReport(binding: FragmentReportBinding?, args: ReportFragmentArgs) {
+        viewModelScope.launch(Dispatchers.IO) {
+            binding?.apply {
+                reportIdEditText.setText(args.reportId)
+                constructionObjectEditTextForEnter.setText(args.constructionObject)
+                dateFromDateAndTime.setText(args.date)
+            }
+        }
+    }
     fun enterDate(binding: FragmentReportBinding?, parentFragmentManager: FragmentManager) {
         val dateDialog = MaterialDatePicker.Builder.datePicker()
             .build()
@@ -54,3 +65,5 @@ class ReportViewModel: ViewModel() {
         dateDialog.show(parentFragmentManager, "DatePicker")
     }
 }
+
+
