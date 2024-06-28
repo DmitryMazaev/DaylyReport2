@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.daylyreport.adapter.TypeOfWorkAdapter
 import com.example.daylyreport.classes.ReportViewModel
 import com.example.daylyreport.databinding.FragmentReportBinding
+import com.example.daylyreport.databinding.NewWorkItemBinding
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
@@ -56,6 +57,7 @@ class ReportFragment : Fragment() {
             binding.newWorkRecyclerView.adapter = typeOfWorkAdapter
             typeOfWorkAdapter.setData()
         }
+
     }
 
 }

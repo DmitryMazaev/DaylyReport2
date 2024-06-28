@@ -2,6 +2,7 @@ package com.example.daylyreport.adapter
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,42 +32,42 @@ class TypeOfWorkAdapter() : RecyclerView.Adapter<TypeOfWorkAdapter.ViewHolder>()
             )
         )
     }
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = countElements
-val context = holder.binding.root.context
-        val materials = listOf<Material>(
-            Material("1", "1", 3.0),
-            Material("2", "2", 3.0),
-        )
-        materials.forEach {
+        val context = holder.binding.root.context
+        holder.binding.buttonAddNewMaterial.setOnClickListener {
             val view = MaterialView(context)
-            view.setALlText(it.toString())
             holder.binding.newMaterialRecyclerView.addView(view)
-            /*holder.binding.newMaterialRecyclerView.children.forEach {
-                (it as? MaterialView)?.let {
-                 it.setALlText()
+            /*materials.forEach {
+                val view = MaterialView(context)
+                //view.setALlText(it.toString())
+                holder.binding.newMaterialRecyclerView.addView(view)
+                *//*holder.binding.newMaterialRecyclerView.children.forEach {
+                    (it as? MaterialView)?.let {
+                     it.setALlText()
+                    }
                 }
-            }
 
-            val view2 = holder.binding.newMaterialRecyclerView.children.find {
-                (it as? MaterialView)?.materialId == "myId"
-            } as MaterialView
-            view.setALlText()*/
+                val view2 = holder.binding.newMaterialRecyclerView.children.find {
+                    (it as? MaterialView)?.materialId == "myId"
+                } as MaterialView
+                view.setALlText()*//*
 
-            val materials = holder.binding.newMaterialRecyclerView.children
-                .mapNotNull { it as? MaterialView }
-                .map { view ->
-                   // view.createMaterial()
-                    val mateName = view.getMaterialName()
+                val materials = holder.binding.newMaterialRecyclerView.children
+                    .mapNotNull { it as? MaterialView }
+                    .map { view ->
+                        // view.createMaterial()
+                        val mateName = view.getMaterialName()
 
-                    Material(
-                        mateName,
-                        "",
-                        1.0
-                    )
-                }
+                        Material(
+                            mateName,
+                            "",
+                            1.0
+                        )
+                    }
+            }*/
         }
+
 
         /*
 
@@ -85,6 +86,8 @@ val context = holder.binding.root.context
     }
 
     class ViewHolder(val binding: NewWorkItemBinding) : RecyclerView.ViewHolder(binding.root)
+
+
 }
 
 class MaterialView @JvmOverloads constructor(
