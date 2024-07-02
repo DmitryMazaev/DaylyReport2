@@ -8,8 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/quiz_fragment"
+        android:id="@+id/report_fragment"
         android:weightSum="2">
         <TextView
             style="@style/heading_report_style"
@@ -128,15 +127,18 @@
             app:layout_constraintEnd_toEndOf="@+id/button_gpoup"
             app:layout_constraintBottom_toBottomOf="@+id/date_text"
             android:text="@string/from_time_text"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/new_work_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_marginVertical="10dp"
+            android:layout_marginTop="240dp"
             android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date_text"
-            android:layout_marginVertical="10dp" />
+            app:layout_constraintTop_toBottomOf="@+id/date_text" />
+
         <Button
             style="@style/button_style"
             android:id="@+id/button_add_new_work"
@@ -164,5 +166,29 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_add_new_report"/>
+        <TextView
+            style="@style/heading_report_style"
+            android:id="@+id/foreman_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/button_update_report"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/foreman_report_text"
+            />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/edit_text_report_style"
+            android:id="@+id/foreman"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/foreman_text"
+            app:layout_constraintStart_toStartOf="@+id/foreman_text"
+            app:layout_constraintEnd_toEndOf="@+id/foreman_text">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/foreman_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

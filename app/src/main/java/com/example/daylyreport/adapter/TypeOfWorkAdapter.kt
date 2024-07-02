@@ -18,6 +18,7 @@ import com.google.android.material.textfield.TextInputEditText
 
 class TypeOfWorkAdapter() : RecyclerView.Adapter<TypeOfWorkAdapter.ViewHolder>() {
     private var countElements: Int = 0
+
     fun setData() {
         countElements +=1
         notifyDataSetChanged()

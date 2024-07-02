@@ -2,7 +2,7 @@ package com.example.daylyreport.entitys
 
 //Класс Транспортное средство
 data class TransportVehicle (
-    //Номер транспортного средства, из списка техники, таблица в БД
+    //Номер транспортного средства
     val transportNumber: String,
     //Владелец транспортного средства
     val ownerOfTransport: String,

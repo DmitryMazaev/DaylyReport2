@@ -2,9 +2,9 @@ package com.example.daylyreport.entitys
 
 //Класс Материал
 data class Material (
-    //Наименование материала, из списка материалов, таблица в БД
+    //Наименование материала
     val nameOfMaterial: String,
-    //Единица измерения материала, привязана к материалу
+    //Единица измерения материала
     val unitOfMeasurementOfMaterial: String,
     //Количество материала
     val quantityOfMaterial: Double

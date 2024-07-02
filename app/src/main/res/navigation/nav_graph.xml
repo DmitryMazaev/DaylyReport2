@@ -3,13 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/ListReportFragment">
-
+    app:startDestination="@id/AutorisationFragment">
+    <fragment
+        android:id="@+id/AutorisationFragment"
+        android:name="com.example.daylyreport.AutorisationFragment"
+        android:label="@string/autorisation_fragment_label"
+        tools:layout="@layout/fragment_autorisation">
+        <action
+            android:id="@+id/action_AutorisationFragment_to_ListReportFragment"
+            app:destination="@+id/ListReportFragment"/>
+    </fragment>
     <fragment
         android:id="@+id/ListReportFragment"
         android:name="com.example.daylyreport.ListReportFragment"
         android:label="@string/list_report_fragment_label"
-        tools:layout="@layout/fragment_report">
+        tools:layout="@layout/fragment_list_report">
         <action
             android:id="@+id/action_ListReportFragment_to_ReportFragment"
             app:destination="@+id/ReportFragment"/>
@@ -18,7 +26,7 @@
         android:id="@+id/ReportFragment"
         android:name="com.example.daylyreport.ReportFragment"
         android:label="@string/report_fragment_label"
-        tools:layout="@layout/fragment_list_report">
+        tools:layout="@layout/fragment_report">
         <argument android:name="report_id"
             app:argType="string"
             app:nullable="true"/>

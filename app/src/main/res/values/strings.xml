@@ -44,7 +44,14 @@
     <string name="date_of_report_text">Дата: </string>
     <string name="object_text">Объект: </string>
     <string name="foreman_text">Исполнитель: </string>
-
+    <string name="login_text">ЛОГИН ПОЛЬЗОВАТЕЛЯ:</string>
+    <string name="login_edit_text">введите логин пользователя</string>
+    <string name="password_text">ПАРОЛЬ:</string>
+    <string name="password_edit_text">ведите пароль</string>
+    <string name="button_autorisation_text">ВОЙТИ</string>
+    <string name="autorisation_fragment_label">АВТОРИЗАЦИЯ</string>
+    <string name="foreman_one_text">производитель работ</string>
+    <string name="foreman_report_text">Ответственный:</string>
 
 
     quantity_of_work_text
