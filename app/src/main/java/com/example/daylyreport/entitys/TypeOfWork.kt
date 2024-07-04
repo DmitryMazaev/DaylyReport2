@@ -1,5 +1,10 @@
 package com.example.daylyreport.entitys
+
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 //Класс вида работ с затратами и их количеством
+@Parcelize
 data class TypeOfWork (
     //Вид работы
     val typicalWork: TypicalWork?,
@@ -11,4 +16,4 @@ data class TypeOfWork (
     val transportVehicleList: List<TransportVehicle>?,
     //Список работников
     val personnelList: List<Personnel>?
-)
+): Parcelable

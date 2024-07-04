@@ -46,9 +46,12 @@ class ReportFragment : Fragment() {
         //viewModel.load(args.id)
         //Вставка id в отчет
         //binding.reportIdEditText.setText(args.reportId)
-
-        binding.buttonDate.setOnClickListener {
-            viewModel.enterDate(binding, parentFragmentManager)
+        arguments ?: return
+        val report = BundleCompat.getParcelable(requireArguments(), "report", Report::class.java) ?: return
+        viewModel.addNewReport(report)
+        
+        binding.constructionObjectEditTextForEnter.doOnTextChanged { text, _, _, _ ->
+            viewModel.updateState { report -> report.copy(constructionObject = text.toString()) }
         }
         binding.buttonAddNewReport.setOnClickListener {
             viewModel.addNewReportAlt(binding)

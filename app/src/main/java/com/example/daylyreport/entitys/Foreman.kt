@@ -1,6 +1,10 @@
 package com.example.daylyreport.entitys
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 //Производитель работ
+@Parcelize
 data class Foreman (
     //Имя производителя работ
     val name: String? = "",
@@ -8,4 +12,4 @@ data class Foreman (
     val login: String? = "",
     //Пароль для авторизации производителя работ
     val password: String? = ""
-)
+): Parcelable

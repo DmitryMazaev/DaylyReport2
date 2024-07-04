@@ -1,7 +1,11 @@
 package com.example.daylyreport.entitys
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 //Класс, содержащий информацию о местоположении производства работ
-data class Location(
+@Parcelize
+class Location(
     //Начало производства работ
     val beginning: String,
 
@@ -10,4 +14,4 @@ data class Location(
 
     //Примечание
     val commentLocation: String
-)
+): Parcelable

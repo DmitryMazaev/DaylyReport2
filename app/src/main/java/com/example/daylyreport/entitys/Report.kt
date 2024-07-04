@@ -1,5 +1,9 @@
 package com.example.daylyreport.entitys
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Report (
     val reportId: String? = "",
     //Наименование строительного объекта
@@ -14,4 +18,4 @@ data class Report (
     val foreman: Foreman? = null,
     //Является ли сменный отчет откорректированным (false - нет, true - да)
     val isAmendedReport: Boolean? = null
-)
+): Parcelable
