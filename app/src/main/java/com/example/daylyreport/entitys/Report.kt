@@ -1,11 +1,12 @@
 package com.example.daylyreport.entitys
 
 import android.os.Parcelable
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Report (
-    val reportId: String? = "",
+data class Report(
+    val reportId: String = FirebaseDatabase.getInstance().getReference("reportList").push().key!!.toString(),
     //Наименование строительного объекта
     val constructionObject: String? = "",
     //Дата начала производства работ

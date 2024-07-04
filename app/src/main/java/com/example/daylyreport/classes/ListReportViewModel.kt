@@ -24,26 +24,6 @@ class ListReportViewModel: ViewModel() {
     }
     fun fetchData(binding: FragmentListReportBinding?) {
         Log.d("QQQ", firebase.toString())
-        firebase.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                reportList = arrayListOf()
-                reportList.clear()
-                Log.d("QQQ snapshot", snapshot.toString())
-                if (snapshot.exists()) {
-                    for (reportOne in snapshot.children) {
-                        val report = reportOne.getValue(Report::class.java)
-                        Log.d("QQQ", report.toString())
-                        reportList.add(report!!)
-                    }
-                }
-                Log.d("QQQ list", reportList.toString())
-                val elementReportAdapter = ElementReportAdapter (reportList)
-                binding?.reportListRecyclerView?.adapter = elementReportAdapter
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-        })
+        
     }
 }

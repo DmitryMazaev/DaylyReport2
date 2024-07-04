@@ -10,10 +10,9 @@ import com.example.daylyreport.ListReportFragmentDirections
 import com.example.daylyreport.entitys.Report
 import com.example.daylyreport.databinding.ElementListReportItemBinding
 
-class ElementReportAdapter(private val reportList: ArrayList<Report>): RecyclerView.Adapter<ElementReportAdapter.ViewHolder>() {
+class ElementReportAdapter(private val reportList: ArrayList<Report>, private val onItemClick: ((Report) -> Unit)): RecyclerView.Adapter<ElementReportAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: ElementListReportItemBinding): RecyclerView.ViewHolder(binding.root)
-    var onItemClick: ((Report) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ElementReportAdapter.ViewHolder(
             ElementListReportItemBinding.inflate(
@@ -46,7 +45,7 @@ class ElementReportAdapter(private val reportList: ArrayList<Report>): RecyclerV
             }
         }
         holder.binding.root.setOnClickListener {
-            onItemClick?.invoke(item)
+            onItemClick.invoke(item)
         }
     }
 }

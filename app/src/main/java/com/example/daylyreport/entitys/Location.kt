@@ -7,11 +7,11 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 class Location(
     //Начало производства работ
-    val beginning: String,
+    val beginning: String = "",
 
     //Окончание производства работ
-    val ending: String,
+    val ending: String = "",
 
     //Примечание
-    val commentLocation: String
+    val commentLocation: String = ""
 ): Parcelable

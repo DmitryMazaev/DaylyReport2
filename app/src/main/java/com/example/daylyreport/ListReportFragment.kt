@@ -1,6 +1,7 @@
 package com.example.daylyreport
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -25,7 +26,8 @@ class ListReportFragment : Fragment() {
     private var _binding: FragmentListReportBinding? = null
     private val binding get() = _binding!!
     private val viewModel: ListReportViewModel by viewModels()
-
+    
+    private val firebase = FirebaseDatabase.getInstance().getReference("reportList")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +40,30 @@ class ListReportFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.fetchData(binding)
+        
+        firebase.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val reportList = arrayListOf<Report>()
+                reportList.clear()
+                if (snapshot.exists()) {
+                    for (reportOne in snapshot.children) {
+                        val report = reportOne.getValue(Report::class.java)
+                        reportList.add(report!!)
+                    }
+                }
+                val elementReportAdapter = ElementReportAdapter (reportList) {
+                    val bundle = Bundle()
+                    bundle.putParcelable(ReportFragment.REPORT_KEY, it)
+                    findNavController().navigate(R.id.action_ListReportFragment_to_ReportFragment)
+                }
+                binding.reportListRecyclerView.adapter = elementReportAdapter
+            }
+            
+            override fun onCancelled(error: DatabaseError) {
+            
+            }
+        })
+        
         binding.reportListRecyclerView.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(this.context)

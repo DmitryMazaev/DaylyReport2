@@ -7,9 +7,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Material (
     //Наименование материала
-    val nameOfMaterial: String,
+    val nameOfMaterial: String = "",
     //Единица измерения материала
-    val unitOfMeasurementOfMaterial: String,
+//    val unitOfMeasurementOfMaterial: String,
     //Количество материала
-    val quantityOfMaterial: Double
+    val quantityOfMaterial: Double = 0.0
 ): Parcelable

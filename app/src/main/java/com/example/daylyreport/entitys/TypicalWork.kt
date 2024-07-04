@@ -7,9 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class TypicalWork (
     //Вид работ, из списка видов работ
-    val typeOfWork: String,
-    //Единица измерения работы
-    val unitOfMeasurementOfWork: String,
+    val typeOfWork: String = "",
     //Количество работы
-    val quantityOfWork: Double,
+    val quantityOfWork: Double = 0.0
 ): Parcelable

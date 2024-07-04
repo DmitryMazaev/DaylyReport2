@@ -128,14 +128,13 @@
             app:layout_constraintBottom_toBottomOf="@+id/date_text"
             android:text="@string/from_time_text"/>
 
-        <androidx.recyclerview.widget.RecyclerView
+        <LinearLayout
             android:id="@+id/new_work_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginVertical="10dp"
             android:layout_marginTop="240dp"
             android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/date_text" />
 

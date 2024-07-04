@@ -21,36 +21,15 @@ class ReportViewModel: ViewModel() {
     private val firebase = FirebaseDatabase.getInstance().getReference("reportList")
     private val calendar = Calendar.getInstance()
     fun addNewReport(report: Report) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val reportId = firebase.push().key!!
-            firebase.child(reportId).setValue(report)
-        }
+    
     }
 
     fun addNewReportAlt(binding: FragmentReportBinding?) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val reportId = firebase.push().key!!.toString()
-            val report = Report(
-                reportId,
-                binding?.constructionObjectEditTextForEnter?.text.toString(),
-                binding?.dateFromDateAndTime?.text.toString(),
-                "08:00",
-                null,
-                null,
-                null)
-            binding?.reportId?.hint = report.reportId.toString()
-            firebase.child(reportId).setValue(report)
-        }
+    
     }
 
     fun updateReport(binding: FragmentReportBinding?, args: ReportFragmentArgs) {
-        viewModelScope.launch(Dispatchers.IO) {
-            binding?.apply {
-                reportIdEditText.setText(args.reportId)
-                constructionObjectEditTextForEnter.setText(args.constructionObject)
-                dateFromDateAndTime.setText(args.date)
-            }
-        }
+    
     }
     fun enterDate(binding: FragmentReportBinding?, parentFragmentManager: FragmentManager) {
         val dateDialog = MaterialDatePicker.Builder.datePicker()
