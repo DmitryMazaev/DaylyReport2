@@ -16,6 +16,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.daylyreport.adapter.TypeOfWorkAdapter
 import com.example.daylyreport.classes.ReportViewModel
+import com.example.daylyreport.data.UserInfoRepository
 import com.example.daylyreport.databinding.FragmentReportBinding
 import com.example.daylyreport.databinding.NewMaterialItemBinding
 import com.example.daylyreport.databinding.NewPersonnelItemBinding
@@ -108,11 +109,10 @@ class ReportFragment : Fragment() {
     }
     
     private fun showReport(report: Report) {
-        Log.d("QQQ work", report.toString())
+        binding.foremanEditText.setText(report.foreman?.name)
         binding.reportIdEditText.setText(report.reportId)
         binding.constructionObjectEditTextForEnter.setText(report.constructionObject)
         report.typeOfWorkList.forEach { work ->
-            Log.d("QQQ work", work.toString())
             val workView = NewWorkItemBinding.inflate(layoutInflater)
             work.materialList.forEach {
                 val materialView = NewMaterialItemBinding.inflate(layoutInflater)

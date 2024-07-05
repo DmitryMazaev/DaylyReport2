@@ -14,9 +14,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 
 class ReportViewModel: ViewModel() {
-    init {
-
-    }
+    
     private val firebase = FirebaseDatabase.getInstance().getReference("reportList")
     private val calendar = Calendar.getInstance()
     fun addNewReport(report: Report) {
