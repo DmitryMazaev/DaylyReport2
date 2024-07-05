@@ -3,7 +3,6 @@ package com.example.daylyreport.classes
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.daylyreport.ReportFragmentArgs
 import com.example.daylyreport.databinding.FragmentReportBinding
 import com.example.daylyreport.entitys.Report
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -28,9 +27,6 @@ class ReportViewModel: ViewModel() {
     
     }
 
-    fun updateReport(binding: FragmentReportBinding?, args: ReportFragmentArgs) {
-    
-    }
     fun enterDate(binding: FragmentReportBinding?, parentFragmentManager: FragmentManager) {
         val dateDialog = MaterialDatePicker.Builder.datePicker()
             .build()

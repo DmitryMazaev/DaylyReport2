@@ -19,11 +19,6 @@ class ListReportViewModel: ViewModel() {
     private lateinit var reportList: ArrayList<Report>
     private val firebase = FirebaseDatabase.getInstance().getReference("reportList")
 
-    init {
-        Log.d("QQQ init", firebase.toString())
-    }
-    fun fetchData(binding: FragmentListReportBinding?) {
-        Log.d("QQQ", firebase.toString())
-        
-    }
+    
+    
 }

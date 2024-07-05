@@ -53,7 +53,6 @@ class ReportFragment : Fragment() {
         return binding.root
     }
     
-    val args by navArgs<ReportFragmentArgs>()
     private val firebase = FirebaseDatabase.getInstance().getReference("reportList")
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,8 +71,14 @@ class ReportFragment : Fragment() {
             
         }*/
         
+        val report = arguments?.let {
+            BundleCompat.getParcelable(it, REPORT_KEY, Report::class.java)
+        } ?: Report()
+        
+        showReport(report)
+        
         binding.buttonAddNewReport.setOnClickListener {
-            addNewReport()
+            addNewReport(report)
         }
         binding.buttonAddNewWork.setOnClickListener {
             val newWorkItemView = NewWorkItemBinding.inflate(inflater)
@@ -101,11 +106,32 @@ class ReportFragment : Fragment() {
     companion object {
         const val REPORT_KEY = "report"
     }
+    
+    private fun showReport(report: Report) {
+        Log.d("QQQ work", report.toString())
+        binding.reportIdEditText.setText(report.reportId)
+        binding.constructionObjectEditTextForEnter.setText(report.constructionObject)
+        report.typeOfWorkList.forEach { work ->
+            Log.d("QQQ work", work.toString())
+            val workView = NewWorkItemBinding.inflate(layoutInflater)
+            work.materialList.forEach {
+                val materialView = NewMaterialItemBinding.inflate(layoutInflater)
+                materialView.materialEditTextForEnter.setText(it.nameOfMaterial)
+                materialView.quantityOfMaterialEditTextForEnter.setText(it.quantityOfMaterial.toString())
+                workView.newMaterialRecyclerView.addView(materialView.root)
+            }
+            work.personnelList.forEach {
+                val personnelView = NewPersonnelItemBinding.inflate(layoutInflater)
+                personnelView.personnelEditTextForEnter.setText(it.personnelType)
+                personnelView.quantityOfPersonnelEditTextForEnter.setText(it.timeOfWorkPersonnel.toString())
+                workView.newPersonnelRecyclerView.addView(personnelView.root)
+            }
+            binding.newWorkRecyclerView.addView(workView.root)
+        }
+    }
 
-    private fun addNewReport() {
-        val report =
-            arguments?.let { BundleCompat.getParcelable(it, REPORT_KEY, Report::class.java) }
-                ?: Report()
+    private fun addNewReport(report: Report) {
+       
         val workList = binding.newWorkRecyclerView.children.map { work ->
             val typeOfWork =
                 work.findViewById<TextInputEditText>(R.id.typical_work_edit_text_for_enter).text.toString()

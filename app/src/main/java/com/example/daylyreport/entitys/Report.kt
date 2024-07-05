@@ -14,7 +14,7 @@ data class Report(
     //Время начала производства работ
     val timeOfWork: String? = "",
     //Поле с видом работ, содержит информацию о количестве и затратах при ее выполнении
-    val typeOfWorkList: List<TypeOfWork>? = null,
+    val typeOfWorkList: List<TypeOfWork> = emptyList(),
     //Поле с производителем работ
     val foreman: Foreman? = null,
     //Является ли сменный отчет откорректированным (false - нет, true - да)

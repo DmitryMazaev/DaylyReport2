@@ -11,9 +11,9 @@ data class TypeOfWork (
     //Поле, содержащее информацию о месте производства работ
     val location: Location? = null,
     //Список материалов
-    val materialList: List<Material>? = null,
+    val materialList: List<Material> = emptyList(),
     //Список транспортных средств
-    val transportVehicleList: List<TransportVehicle>? = null,
+    val transportVehicleList: List<TransportVehicle> = emptyList(),
     //Список работников
-    val personnelList: List<Personnel>? = null
+    val personnelList: List<Personnel> = emptyList()
 ): Parcelable

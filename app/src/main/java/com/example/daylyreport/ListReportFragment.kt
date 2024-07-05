@@ -39,11 +39,10 @@ class ListReportFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.fetchData(binding)
         
         firebase.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val reportList = arrayListOf<Report>()
+                val reportList = mutableListOf<Report>()
                 reportList.clear()
                 if (snapshot.exists()) {
                     for (reportOne in snapshot.children) {
@@ -51,10 +50,11 @@ class ListReportFragment : Fragment() {
                         reportList.add(report!!)
                     }
                 }
-                val elementReportAdapter = ElementReportAdapter (reportList) {
+                Log.d("QQQ", reportList.toString())
+                val elementReportAdapter = ElementReportAdapter(reportList) {
                     val bundle = Bundle()
                     bundle.putParcelable(ReportFragment.REPORT_KEY, it)
-                    findNavController().navigate(R.id.action_ListReportFragment_to_ReportFragment)
+                    findNavController().navigate(R.id.ReportFragment, bundle)
                 }
                 binding.reportListRecyclerView.adapter = elementReportAdapter
             }
