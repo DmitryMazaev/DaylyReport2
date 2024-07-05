@@ -19,16 +19,7 @@ class ReportViewModel: ViewModel() {
     private val calendar = Calendar.getInstance()
   
     fun enterDate(binding: FragmentReportBinding?, parentFragmentManager: FragmentManager) {
-        val dateDialog = MaterialDatePicker.Builder.datePicker()
-            .build()
-
-        dateDialog.addOnPositiveButtonClickListener {timeInMillis ->
-            calendar.timeInMillis = timeInMillis
-            val dateFormat = SimpleDateFormat("dd-MM-yyyy")
-            Snackbar.make(binding?.buttonDate!!, dateFormat.format(calendar.time), Snackbar.LENGTH_SHORT).show()
-            binding.dateFromDateAndTime.text = dateFormat.format(calendar.time)
-        }
-        dateDialog.show(parentFragmentManager, "DatePicker")
+    
     }
 }
 

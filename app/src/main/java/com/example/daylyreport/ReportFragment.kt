@@ -1,5 +1,6 @@
 package com.example.daylyreport
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,16 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.annotation.RequiresApi
 import androidx.core.os.BundleCompat
 import androidx.core.view.children
-import androidx.core.view.size
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.daylyreport.adapter.TypeOfWorkAdapter
 import com.example.daylyreport.classes.ReportViewModel
-import com.example.daylyreport.data.UserInfoRepository
 import com.example.daylyreport.databinding.FragmentReportBinding
 import com.example.daylyreport.databinding.NewMaterialItemBinding
 import com.example.daylyreport.databinding.NewPersonnelItemBinding
@@ -29,9 +26,16 @@ import com.example.daylyreport.entitys.Report
 import com.example.daylyreport.entitys.TransportVehicle
 import com.example.daylyreport.entitys.TypeOfWork
 import com.example.daylyreport.entitys.TypicalWork
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.firebase.database.FirebaseDatabase
+import java.text.SimpleDateFormat
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
+import java.util.Locale
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -55,6 +59,7 @@ class ReportFragment : Fragment() {
     
     private val firebase = FirebaseDatabase.getInstance().getReference("reportList")
     
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val inflater = LayoutInflater.from(requireContext())
@@ -98,7 +103,26 @@ class ReportFragment : Fragment() {
         }
         
         binding.buttonDate.setOnClickListener {
-            viewModel.enterDate(binding, parentFragmentManager)
+            val dateDialog = MaterialDatePicker.Builder.datePicker()
+                .build()
+            
+            dateDialog.addOnPositiveButtonClickListener {timeInMillis ->
+                calendar.timeInMillis = timeInMillis
+                val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+                Snackbar.make(binding.buttonDate, dateFormat.format(calendar.time), Snackbar.LENGTH_SHORT).show()
+                binding.dateFromDateAndTime.text = dateFormat.format(calendar.time)
+            }
+            dateDialog.show(parentFragmentManager, "DatePicker")
+        }
+        
+        binding.buttonTime.setOnClickListener {
+            val timePicker = MaterialTimePicker.Builder().build()
+            timePicker.addOnPositiveButtonClickListener {
+                val time = LocalTime.of(timePicker.hour, timePicker.minute)
+                val dtf = DateTimeFormatter.ofPattern("HH:mm")
+                binding.timeFromDateAndTime.text = time.format(dtf)
+            }
+            timePicker.show(parentFragmentManager, null)
         }
         
     }
