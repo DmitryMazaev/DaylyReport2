@@ -3,37 +3,40 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list_report_fragment"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-        tools:context=".ListReportFragment"
-        android:id="@+id/list_report_fragment">
-        <Button
-            style="@style/button_style"
-            android:id="@+id/button_new_report"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/button_new_report"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-        <TextView
-            style="@style/heading_report_style"
-            android:id="@+id/list_report_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/button_new_report"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/list_report_text"
-            />
+    android:layout_height="match_parent"
+    tools:context=".ListReportFragment">
+
+    <Button
+        android:id="@+id/button_new_report"
+        style="@style/button_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/button_new_report"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/list_report_text"
+        style="@style/heading_report_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/list_report_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_new_report" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/report_list_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_height="0dp"
+            android:layout_marginVertical="10dp"
             android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/list_report_text"
-            android:layout_marginVertical="10dp"/>
+            app:layout_constraintTop_toBottomOf="@+id/list_report_text" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
