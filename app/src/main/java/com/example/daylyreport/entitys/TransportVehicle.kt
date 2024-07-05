@@ -7,9 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class TransportVehicle (
     //Номер транспортного средства
-    val transportNumber: String,
-    //Владелец транспортного средства
-    val ownerOfTransport: String,
+    val transportNumber: String = "",
     //Время работы
-    val timeOfWorkTransport: String
+    val timeOfWorkTransport: Double = 0.0
 ): Parcelable

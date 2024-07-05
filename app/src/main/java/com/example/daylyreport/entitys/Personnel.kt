@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Personnel (
     //Должность работника
-    val personnelType: String,
+    val personnelType: String = "",
     //Время работы
-    val timeOfWorkPersonnel: String
+    val timeOfWorkPersonnel: Double = 0.0
 ): Parcelable

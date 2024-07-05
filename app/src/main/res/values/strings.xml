@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DaylyReport</string>
+    <string name="app_name">СМЕННЫЙ ОТЧЕТ</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="list_report_fragment_label">СМЕННЫЕ ОТЧЕТ</string>
@@ -52,6 +52,16 @@
     <string name="autorisation_fragment_label">АВТОРИЗАЦИЯ</string>
     <string name="foreman_one_text">производитель работ</string>
     <string name="foreman_report_text">Ответственный:</string>
+    <string name="new_transport_text">Транспортное средство:</string>
+    <string name="transport_edit_text">выберите транспортное средство</string>
+    <string name="quantity_of_transport_text">Время работы:</string>
+    <string name="quantity_of_transport_edit_text">введите время работы</string>
+    <string name="button_add_new_transport_text">ДОБАВИТЬ ТЕХНИКУ</string>
+    <string name="button_add_new_personnel_text">ДОБАВИТЬ ТРУД</string>
+    <string name="new_personnel_text">Персонал:</string>
+    <string name="personnel_edit_text">выберите персонал</string>
+    <string name="quantity_of_personnel_text">Время работы:</string>
+    <string name="quantity_of_personnel_edit_text">Время работы:</string>
 
 
     quantity_of_work_text
