@@ -21,64 +21,40 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
 class AutorisationViewModel: ViewModel() {
-    init {
-
-    }
-    lateinit var foremansList: ArrayList<Foreman>
+    
+    private val _foremanFlow = MutableStateFlow<List<Foreman>>(emptyList())
+    val foremanFlow = _foremanFlow.asStateFlow()
+    
     private val firebase = FirebaseDatabase.getInstance().getReference("foreman")
-    var listString: ArrayList<String> = ArrayList()
 
-    fun addListOfForemans(binding: FragmentAutorisationBinding?) {
+    init {
         firebase.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                //foremansList = arrayListOf()
-                foremansList.clear()
+                val foremanList = mutableListOf<Foreman>()
                 if (snapshot.exists()) {
                     for (foremanOne in snapshot.children) {
                         val foreman = foremanOne.getValue(Foreman::class.java)
-                        foremansList.add(foreman!!)
-
+                        foremanList.add(foreman!!)
+                        
                     }
                 }
-                //val autorisationAdapter = AutorisationAdapter (foremansList)
-                //binding?.foremansRecyclerView?.adapter = autorisationAdapter
+                _foremanFlow.value = foremanList
             }
-
+            
             override fun onCancelled(error: DatabaseError) {
-
+            
             }
         })
     }
-
-    fun addToAutoComplite(binding: FragmentAutorisationBinding?) {
-        firebase.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                foremansList = arrayListOf()
-                foremansList.clear()
-                if (snapshot.exists()) {
-                    for (foremanOne in snapshot.children) {
-                        val foreman = foremanOne.getValue(Foreman::class.java)
-                        foremansList.add(foreman!!)
-                        listString.add(foreman.name!!)
-                        Log.e("********", foreman.name)
-                    }
-
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-        })
-    }
-
-
+    
+//    fun check(login: String, pass: String) : Boolean{
+//
+//    }
 }
-
-

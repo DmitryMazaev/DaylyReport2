@@ -1,16 +1,26 @@
 package com.example.daylyreport
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.content.ContentProviderCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.daylyreport.classes.AutorisationViewModel
 import com.example.daylyreport.databinding.FragmentAutorisationBinding
+import com.example.daylyreport.entitys.Foreman
+import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener
+import kotlinx.coroutines.launch
 import java.util.Calendar
 
 /**
@@ -23,7 +33,8 @@ class AutorisationFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    val viewModel: AutorisationViewModel by viewModels()
+    private val viewModel: AutorisationViewModel by viewModels()
+    private var foremanList = listOf<Foreman>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,8 +46,22 @@ class AutorisationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.addToAutoComplite(binding)
-        //val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, viewModel.listString)
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.foremanFlow.collect {
+                    foremanList = it
+                    val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, it.map { it.name })
+                    binding.autoComplete.setAdapter(adapter)
+                    binding.autoComplete.threshold = 1
+                }
+            }
+        }
+        binding.autoComplete.setOnItemClickListener { _, _, position, _ ->
+            val foreman = foremanList[position]
+            binding.loginIdEditText.setText(foreman.login)
+        }
+        
+//        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, viewModel.listString)
         //binding.autoComplete.setAdapter(adapter)
         binding.buttonAutorisation.setOnClickListener {
             findNavController().navigate(R.id.action_AutorisationFragment_to_ListReportFragment)
