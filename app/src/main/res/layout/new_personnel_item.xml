@@ -1,5 +1,5 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/new_material_recycler"
+    android:id="@+id/new_transport_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,51 +9,51 @@
         android:layout_height="wrap_content">
         <TextView
             style="@style/heading_report_style"
-            android:id="@+id/material_text"
+            android:id="@+id/personnel_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/new_material_text"/>
+            android:text="@string/new_personnel_text"/>
         <com.google.android.material.textfield.TextInputLayout
             style="@style/edit_text_report_style"
-            android:id="@+id/material_edit_text"
+            android:id="@+id/personnel_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/material_text"
+            app:layout_constraintTop_toBottomOf="@+id/personnel_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:hint="@string/material_edit_text"
+            android:hint="@string/personnel_edit_text"
             app:endIconMode="clear_text">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/material_edit_text_for_enter"
+                android:id="@+id/personnel_edit_text_for_enter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 />
         </com.google.android.material.textfield.TextInputLayout>
         <TextView
             style="@style/heading_report_style"
-            android:id="@+id/quantity_of_material_text"
+            android:id="@+id/quantity_of_personnel_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/material_edit_text"
+            app:layout_constraintTop_toBottomOf="@+id/personnel_edit_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/quantity_of_material_text"/>
+            android:text="@string/quantity_of_personnel_text"/>
         <com.google.android.material.textfield.TextInputLayout
             style="@style/edit_text_report_style"
-            android:id="@+id/quantity_of_material_edit_text"
+            android:id="@+id/quantity_of_work_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/quantity_of_material_text"
+            app:layout_constraintTop_toBottomOf="@+id/quantity_of_personnel_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:hint="@string/quantity_of_material_edit_text"
+            android:hint="@string/quantity_of_personnel_edit_text"
             app:endIconMode="clear_text"
             >
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/quantity_of_material_edit_text_for_enter"
+                android:id="@+id/quantity_of_personnel_edit_text_for_enter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"

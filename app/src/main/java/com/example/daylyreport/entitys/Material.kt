@@ -1,7 +1,8 @@
 package com.example.daylyreport.entitys
 
 import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import kotlinx.android.parcel.Parcelize
+
 
 //Класс Материал
 @Parcelize

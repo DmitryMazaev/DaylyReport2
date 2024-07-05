@@ -16,10 +16,14 @@ import com.example.daylyreport.adapter.TypeOfWorkAdapter
 import com.example.daylyreport.classes.ReportViewModel
 import com.example.daylyreport.databinding.FragmentReportBinding
 import com.example.daylyreport.databinding.NewMaterialItemBinding
+import com.example.daylyreport.databinding.NewPersonnelItemBinding
+import com.example.daylyreport.databinding.NewTransportItemBinding
 import com.example.daylyreport.databinding.NewWorkItemBinding
 import com.example.daylyreport.entitys.Location
 import com.example.daylyreport.entitys.Material
+import com.example.daylyreport.entitys.Personnel
 import com.example.daylyreport.entitys.Report
+import com.example.daylyreport.entitys.TransportVehicle
 import com.example.daylyreport.entitys.TypeOfWork
 import com.example.daylyreport.entitys.TypicalWork
 import com.google.android.material.textfield.TextInputEditText
@@ -57,47 +61,17 @@ class ReportFragment : Fragment() {
         //Вставка id в отчет
         //binding.reportIdEditText.setText(args.reportId)
         
-        val report =
-            arguments?.let { BundleCompat.getParcelable(it, REPORT_KEY, Report::class.java) }
-                ?: Report()
+
         
-        with(binding) {
-//            reportIdEditText.setText(report.reportId)
-//            constructionObjectEditTextForEnter.setText(report.constructionObject)
-//            dateFromDateAndTime.setText(report.dateOfWork)
+        /*with(binding) {
+            reportIdEditText.setText(report.reportId)
+            constructionObjectEditTextForEnter.setText(report.constructionObject)
+            dateFromDateAndTime.setText(report.dateOfWork)
             
-        }
+        }*/
         
         binding.buttonAddNewReport.setOnClickListener {
-            val workList = binding.newWorkRecyclerView.children.map { work ->
-                val typeOfWork =
-                    work.findViewById<TextInputEditText>(R.id.typical_work_edit_text_for_enter).text.toString()
-                val comment =
-                    work.findViewById<TextInputEditText>(R.id.location_comment_edit_text_for_enter).text.toString()
-                
-                val materials = work.findViewById<LinearLayout>(R.id.new_material_recycler_view)
-                val materialList = materials.children.map { material ->
-                    val material =
-                        materials.findViewById<TextInputEditText>(R.id.material_edit_text_for_enter).text.toString()
-                    val quantity =
-                        materials.findViewById<TextInputEditText>(R.id.quantity_of_work_edit_text_for_enter).text.toString()
-                            .toDouble()
-                    Material(material, quantity)
-                }.toList()
-                TypeOfWork(
-                    TypicalWork(typeOfWork),
-                    Location(commentLocation = comment),
-                    materialList,
-                    null,
-                    null
-                )
-            }.toList()
-            
-            val updatedReport = report.copy(typeOfWorkList = workList)
-            firebase.child(updatedReport.reportId).setValue(updatedReport)
-            
-            viewModel.addNewReportAlt(binding)
-            findNavController().navigate(R.id.action_ReportFragment_to_ListReportFragment)
+            addNewReport()
         }
         binding.buttonAddNewWork.setOnClickListener {
             val newWorkItemView = NewWorkItemBinding.inflate(inflater)
@@ -106,10 +80,18 @@ class ReportFragment : Fragment() {
                 val materialView = NewMaterialItemBinding.inflate(inflater)
                 newWorkItemView.newMaterialRecyclerView.addView(materialView.root)
             }
+            newWorkItemView.buttonAddNewTransport.setOnClickListener {
+                val transportView = NewTransportItemBinding.inflate(inflater)
+                newWorkItemView.newTransportRecyclerView.addView(transportView.root)
+            }
+            newWorkItemView.buttonAddNewPersonnel.setOnClickListener {
+                val personnelView = NewPersonnelItemBinding.inflate(inflater)
+                newWorkItemView.newPersonnelRecyclerView.addView(personnelView.root)
+            }
         }
         
-        binding.buttonUpdateReport.setOnClickListener {
-            viewModel.updateReport(binding, args)
+        binding.buttonDate.setOnClickListener {
+            viewModel.enterDate(binding, parentFragmentManager)
         }
         
     }
@@ -117,5 +99,62 @@ class ReportFragment : Fragment() {
     companion object {
         const val REPORT_KEY = "report"
     }
+
+    private fun addNewReport() {
+        val report =
+            arguments?.let { BundleCompat.getParcelable(it, REPORT_KEY, Report::class.java) }
+                ?: Report()
+        val workList = binding.newWorkRecyclerView.children.map { work ->
+            val typeOfWork =
+                work.findViewById<TextInputEditText>(R.id.typical_work_edit_text_for_enter).text.toString()
+            val beginningPiket = work.findViewById<TextInputEditText>(R.id.pk_start_edit_text_for_enter).text.toString()
+            val beginningPlus = work.findViewById<TextInputEditText>(R.id.plus_start_edit_text_for_enter).text.toString()
+            val endingPiket = work.findViewById<TextInputEditText>(R.id.pk_end_edit_text_for_enter).text.toString()
+            val endingPlus = work.findViewById<TextInputEditText>(R.id.plus_end_edit_text_for_enter).text.toString()
+            val comment =
+                work.findViewById<TextInputEditText>(R.id.location_comment_edit_text_for_enter).text.toString()
+            val quantityOfWork = work.findViewById<TextInputEditText>(R.id.quantity_of_work_edit_text_for_enter).text.toString()
+            val materials = work.findViewById<LinearLayout>(R.id.new_material_recycler_view)
+            val materialList = materials.children.map { material ->
+                val material =
+                    materials.findViewById<TextInputEditText>(R.id.material_edit_text_for_enter).text.toString()
+                val quantity =
+                    materials.findViewById<TextInputEditText>(R.id.quantity_of_material_edit_text_for_enter).text.toString()
+                        .toDouble()
+                Material(material, quantity)
+            }.toList()
+            val transports = work.findViewById<LinearLayout>(R.id.new_transport_recycler_view)
+            val transportList = transports.children.map { transport ->
+                val transport =
+                    transports.findViewById<TextInputEditText>(R.id.transport_edit_text_for_enter).text.toString()
+                val quantity =
+                    transports.findViewById<TextInputEditText>(R.id.quantity_of_transport_edit_text_for_enter).text.toString()
+                        .toDouble()
+                TransportVehicle(transport, quantity)
+            }.toList()
+            val personnel = work.findViewById<LinearLayout>(R.id.new_personnel_recycler_view)
+            val personnelList = personnel.children.map { person ->
+                val person =
+                    personnel.findViewById<TextInputEditText>(R.id.personnel_edit_text_for_enter).text.toString()
+                val quantity =
+                    personnel.findViewById<TextInputEditText>(R.id.quantity_of_personnel_edit_text_for_enter).text.toString()
+                        .toDouble()
+                Personnel(person, quantity)
+            }.toList()
+            TypeOfWork(
+                TypicalWork(typeOfWork = typeOfWork, quantityOfWork = quantityOfWork.toDouble()),
+                Location(beginningPiket = beginningPiket, beginningPlus = beginningPlus, endingPiket = endingPiket, endingPlus = endingPlus, commentLocation = comment),
+                materialList,
+                transportList,
+                personnelList
+            )
+        }.toList()
+        val updatedReport = report.copy(typeOfWorkList = workList)
+        firebase.child(updatedReport.reportId).setValue(updatedReport)
+
+        viewModel.addNewReportAlt(binding)
+        findNavController().navigate(R.id.action_ReportFragment_to_ListReportFragment)
+    }
+
 }
 
