@@ -1,6 +1,7 @@
 package com.example.daylyreport
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.os.BundleCompat
 import androidx.core.view.children
+import androidx.core.view.size
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -115,11 +117,11 @@ class ReportFragment : Fragment() {
                 work.findViewById<TextInputEditText>(R.id.location_comment_edit_text_for_enter).text.toString()
             val quantityOfWork = work.findViewById<TextInputEditText>(R.id.quantity_of_work_edit_text_for_enter).text.toString()
             val materials = work.findViewById<LinearLayout>(R.id.new_material_recycler_view)
-            val materialList = materials.children.map { material ->
+            val materialList = materials.children.map { materialView ->
                 val material =
-                    materials.findViewById<TextInputEditText>(R.id.material_edit_text_for_enter).text.toString()
+                    materialView.findViewById<TextInputEditText>(R.id.material_edit_text_for_enter).text.toString()
                 val quantity =
-                    materials.findViewById<TextInputEditText>(R.id.quantity_of_material_edit_text_for_enter).text.toString()
+                    materialView.findViewById<TextInputEditText>(R.id.quantity_of_material_edit_text_for_enter).text.toString()
                         .toDouble()
                 Material(material, quantity)
             }.toList()
