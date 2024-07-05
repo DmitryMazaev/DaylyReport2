@@ -11,7 +11,9 @@
         tools:layout="@layout/fragment_autorisation">
         <action
             android:id="@+id/action_AutorisationFragment_to_ListReportFragment"
-            app:destination="@+id/ListReportFragment"/>
+            app:destination="@+id/ListReportFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/ListReportFragment"
@@ -20,7 +22,9 @@
         tools:layout="@layout/fragment_list_report">
         <action
             android:id="@+id/action_ListReportFragment_to_ReportFragment"
-            app:destination="@+id/ReportFragment"/>
+            app:destination="@+id/ReportFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/ReportFragment"
@@ -41,7 +45,9 @@
             app:nullable="true"/>
         <action
             android:id="@+id/action_ReportFragment_to_ListReportFragment"
-            app:destination="@+id/ListReportFragment"/>
+            app:destination="@+id/ListReportFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"/>
     </fragment>
 
 </navigation>
