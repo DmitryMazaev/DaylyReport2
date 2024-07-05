@@ -43,8 +43,7 @@ class ReportFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    val viewModel: ReportViewModel by viewModels()
-    private val typeOfWorkAdapter = TypeOfWorkAdapter()
+    private val viewModel: ReportViewModel by viewModels()
     private val calendar = Calendar.getInstance()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -152,20 +151,20 @@ class ReportFragment : Fragment() {
                 Material(material, quantity)
             }.toList()
             val transports = work.findViewById<LinearLayout>(R.id.new_transport_recycler_view)
-            val transportList = transports.children.map { transport ->
+            val transportList = transports.children.map { transportView ->
                 val transport =
-                    transports.findViewById<TextInputEditText>(R.id.transport_edit_text_for_enter).text.toString()
+                    transportView.findViewById<TextInputEditText>(R.id.transport_edit_text_for_enter).text.toString()
                 val quantity =
-                    transports.findViewById<TextInputEditText>(R.id.quantity_of_transport_edit_text_for_enter).text.toString()
+                    transportView.findViewById<TextInputEditText>(R.id.quantity_of_transport_edit_text_for_enter).text.toString()
                         .toDouble()
                 TransportVehicle(transport, quantity)
             }.toList()
             val personnel = work.findViewById<LinearLayout>(R.id.new_personnel_recycler_view)
-            val personnelList = personnel.children.map { person ->
+            val personnelList = personnel.children.map { personView ->
                 val person =
-                    personnel.findViewById<TextInputEditText>(R.id.personnel_edit_text_for_enter).text.toString()
+                    personView.findViewById<TextInputEditText>(R.id.personnel_edit_text_for_enter).text.toString()
                 val quantity =
-                    personnel.findViewById<TextInputEditText>(R.id.quantity_of_personnel_edit_text_for_enter).text.toString()
+                    personView.findViewById<TextInputEditText>(R.id.quantity_of_personnel_edit_text_for_enter).text.toString()
                         .toDouble()
                 Personnel(person, quantity)
             }.toList()
@@ -180,7 +179,6 @@ class ReportFragment : Fragment() {
         val updatedReport = report.copy(typeOfWorkList = workList)
         firebase.child(updatedReport.reportId).setValue(updatedReport)
 
-        viewModel.addNewReportAlt(binding)
         findNavController().navigate(R.id.action_ReportFragment_to_ListReportFragment)
     }
 

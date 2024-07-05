@@ -17,14 +17,7 @@ class ReportViewModel: ViewModel() {
     
     private val firebase = FirebaseDatabase.getInstance().getReference("reportList")
     private val calendar = Calendar.getInstance()
-    fun addNewReport(report: Report) {
-    
-    }
-
-    fun addNewReportAlt(binding: FragmentReportBinding?) {
-    
-    }
-
+  
     fun enterDate(binding: FragmentReportBinding?, parentFragmentManager: FragmentManager) {
         val dateDialog = MaterialDatePicker.Builder.datePicker()
             .build()
