@@ -63,18 +63,6 @@ class ReportFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val inflater = LayoutInflater.from(requireContext())
-        //viewModel.load(args.id)
-        //Вставка id в отчет
-        //binding.reportIdEditText.setText(args.reportId)
-        
-
-        
-        /*with(binding) {
-            reportIdEditText.setText(report.reportId)
-            constructionObjectEditTextForEnter.setText(report.constructionObject)
-            dateFromDateAndTime.setText(report.dateOfWork)
-            
-        }*/
         
         val report = arguments?.let {
             BundleCompat.getParcelable(it, REPORT_KEY, Report::class.java)
@@ -135,13 +123,28 @@ class ReportFragment : Fragment() {
         binding.foremanEditText.setText(report.foreman?.name)
         binding.reportIdEditText.setText(report.reportId)
         binding.constructionObjectEditTextForEnter.setText(report.constructionObject)
+        binding.dateFromDateAndTime.setText(report.dateOfWork)
+        binding.timeFromDateAndTime.setText(report.timeOfWork)
         report.typeOfWorkList.forEach { work ->
             val workView = NewWorkItemBinding.inflate(layoutInflater)
+            workView.typicalWorkEditTextForEnter.setText(work.typicalWork?.typeOfWork.toString())
+            workView.pkStartEditTextForEnter.setText(work.location?.beginningPiket)
+            workView.plusStartEditTextForEnter.setText(work.location?.beginningPlus)
+            workView.pkEndEditTextForEnter.setText(work.location?.endingPiket)
+            workView.plusEndEditTextForEnter.setText(work.location?.endingPlus)
+            workView.locationCommentEditTextForEnter.setText(work.location?.commentLocation)
+            workView.quantityOfWorkEditTextForEnter.setText(work.typicalWork?.quantityOfWork.toString())
             work.materialList.forEach {
                 val materialView = NewMaterialItemBinding.inflate(layoutInflater)
                 materialView.materialEditTextForEnter.setText(it.nameOfMaterial)
                 materialView.quantityOfMaterialEditTextForEnter.setText(it.quantityOfMaterial.toString())
                 workView.newMaterialRecyclerView.addView(materialView.root)
+            }
+            work.transportVehicleList.forEach {
+                val transportView = NewTransportItemBinding.inflate(layoutInflater)
+                transportView.transportEditTextForEnter.setText(it.transportNumber)
+                transportView.quantityOfTransportEditTextForEnter.setText(it.timeOfWorkTransport.toString())
+                workView.newTransportRecyclerView.addView(transportView.root)
             }
             work.personnelList.forEach {
                 val personnelView = NewPersonnelItemBinding.inflate(layoutInflater)
@@ -154,7 +157,7 @@ class ReportFragment : Fragment() {
     }
 
     private fun addNewReport(report: Report) {
-       
+
         val workList = binding.newWorkRecyclerView.children.map { work ->
             val typeOfWork =
                 work.findViewById<TextInputEditText>(R.id.typical_work_edit_text_for_enter).text.toString()
@@ -200,7 +203,11 @@ class ReportFragment : Fragment() {
                 personnelList
             )
         }.toList()
-        val updatedReport = report.copy(typeOfWorkList = workList)
+        val updatedReport = report.copy(
+            constructionObject = binding.constructionObjectEditTextForEnter.text.toString(),
+            dateOfWork = binding.dateFromDateAndTime.text.toString(),
+            timeOfWork = binding.timeFromDateAndTime.text.toString(),
+            typeOfWorkList = workList)
         firebase.child(updatedReport.reportId).setValue(updatedReport)
 
         findNavController().navigate(R.id.action_ReportFragment_to_ListReportFragment)

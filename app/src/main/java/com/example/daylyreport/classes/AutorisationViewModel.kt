@@ -36,7 +36,21 @@ class AutorisationViewModel: ViewModel() {
         })
     }
     
-//    fun check(login: String, pass: String) : Boolean{
-//
-//    }
+    fun checkPassword(login: String, pass: String, foremanList: List<Foreman>) : Boolean{
+        for (foreman in foremanList) {
+            if (foreman.login.equals(login) && foreman.password.equals(pass)) {
+                return true
+            }
+        }
+        return false
+    }
+
+    fun checkPLogin(name: String, foremanList: List<Foreman>) : String{
+        for (foreman in foremanList) {
+            if (foreman.name.equals(name) ) {
+                return foreman.login
+            }
+        }
+        return ""
+    }
 }

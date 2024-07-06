@@ -33,7 +33,7 @@ class ElementReportAdapter(private val reportList: List<Report>, private val onI
             binding.keyDaylyReport.text = item.reportId
             binding.date.text = item.dateOfWork
             binding.constructionObject.text = item.constructionObject
-            binding.foreman.text = "прораб"
+            binding.foreman.text = item.foreman?.name
         }
         holder.binding.root.setOnClickListener {
             onItemClick.invoke(item)

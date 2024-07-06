@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.content.ContentProviderCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -60,13 +61,10 @@ class AutorisationFragment : Fragment() {
                 }
             }
         }
-        binding.autoComplete.setOnItemClickListener { _, _, position, _ ->
-            val foreman = foremanList[position]
-            binding.loginIdEditText.setText(foreman.login)
+        binding.autoComplete.setOnItemClickListener { _, _, _, _ ->
+            binding.loginIdEditText.setText(viewModel.checkPLogin(binding.autoComplete.text.toString(), foremanList))
         }
 
-//        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, viewModel.listString)
-        //binding.autoComplete.setAdapter(adapter)
         binding.buttonAutorisation.setOnClickListener {
             UserInfoRepository.setUser(
                 Foreman(
@@ -75,7 +73,12 @@ class AutorisationFragment : Fragment() {
                     binding.passwordEditTextForEnter.text.toString()
                 )
             )
-            findNavController().navigate(R.id.action_AutorisationFragment_to_ListReportFragment)
+            if(viewModel.checkPassword(binding.loginIdEditText.text.toString(), binding.passwordEditTextForEnter.text.toString(), foremanList)) {
+                findNavController().navigate(R.id.action_AutorisationFragment_to_ListReportFragment)
+            }
+            else {
+                Toast.makeText(context, "Неправильный логин или пароль", Toast.LENGTH_SHORT).show()
+            }
         }
     }
     
