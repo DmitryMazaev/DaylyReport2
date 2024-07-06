@@ -80,7 +80,7 @@ class ReportFragment : Fragment() {
         
         showReport(report)
         setConstructionObjectAdapter()
-
+        setTypicalWorkAdapter()
         
         binding.buttonAddNewReport.setOnClickListener {
             addNewReport(report)
@@ -88,7 +88,6 @@ class ReportFragment : Fragment() {
         binding.buttonAddNewWork.setOnClickListener {
             val newWorkItemView = NewWorkItemBinding.inflate(inflater)
             binding.newWorkRecyclerView.addView(newWorkItemView.root)
-            setTypicalWorkAdapter()
             newWorkItemView.buttonAddNewMaterial.setOnClickListener {
                 val materialView = NewMaterialItemBinding.inflate(inflater)
                 newWorkItemView.newMaterialRecyclerView.addView(materialView.root)
