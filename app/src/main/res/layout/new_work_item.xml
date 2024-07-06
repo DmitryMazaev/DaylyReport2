@@ -17,7 +17,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/typical_work_text"/>
-        <com.google.android.material.textfield.TextInputLayout
+        <AutoCompleteTextView
             style="@style/edit_text_report_style"
             android:id="@+id/typical_work_edit_text"
             android:layout_width="match_parent"
@@ -26,13 +26,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:hint="@string/typical_work_edit_text"
-            app:endIconMode="clear_text">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/typical_work_edit_text_for_enter"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+            app:endIconMode="clear_text"/>
         <TextView
             style="@style/heading_report_style"
             android:id="@+id/location_start_text"

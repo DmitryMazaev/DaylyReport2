@@ -56,19 +56,19 @@ class AutorisationFragment : Fragment() {
                         requireContext(),
                         android.R.layout.simple_list_item_1,
                         it.map { it.name })
-                    binding.autoComplete.setAdapter(adapter)
-                    binding.autoComplete.threshold = 1
+                    binding.autoCompleteName.setAdapter(adapter)
+                    binding.autoCompleteName.threshold = 1
                 }
             }
         }
-        binding.autoComplete.setOnItemClickListener { _, _, _, _ ->
-            binding.loginIdEditText.setText(viewModel.checkPLogin(binding.autoComplete.text.toString(), foremanList))
+        binding.autoCompleteName.setOnItemClickListener { _, _, _, _ ->
+            binding.loginIdEditText.setText(viewModel.checkPLogin(binding.autoCompleteName.text.toString(), foremanList))
         }
 
         binding.buttonAutorisation.setOnClickListener {
             UserInfoRepository.setUser(
                 Foreman(
-                    binding.autoComplete.text.toString(),
+                    binding.autoCompleteName.text.toString(),
                     binding.loginIdEditText.text.toString(),
                     binding.passwordEditTextForEnter.text.toString()
                 )

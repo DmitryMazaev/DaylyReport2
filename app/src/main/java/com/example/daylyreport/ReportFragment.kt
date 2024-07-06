@@ -7,11 +7,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import androidx.core.os.BundleCompat
 import androidx.core.view.children
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.daylyreport.classes.ReportViewModel
 import com.example.daylyreport.databinding.FragmentReportBinding
@@ -19,6 +24,8 @@ import com.example.daylyreport.databinding.NewMaterialItemBinding
 import com.example.daylyreport.databinding.NewPersonnelItemBinding
 import com.example.daylyreport.databinding.NewTransportItemBinding
 import com.example.daylyreport.databinding.NewWorkItemBinding
+import com.example.daylyreport.entitys.ConstructionObject
+import com.example.daylyreport.entitys.Foreman
 import com.example.daylyreport.entitys.Location
 import com.example.daylyreport.entitys.Material
 import com.example.daylyreport.entitys.Personnel
@@ -31,6 +38,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -49,6 +57,8 @@ class ReportFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: ReportViewModel by viewModels()
     private val calendar = Calendar.getInstance()
+    private var constructionObjectList = listOf<ConstructionObject>()
+    private var typicalWorkList = listOf<TypicalWork>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -69,6 +79,8 @@ class ReportFragment : Fragment() {
         } ?: Report()
         
         showReport(report)
+        setConstructionObjectAdapter()
+
         
         binding.buttonAddNewReport.setOnClickListener {
             addNewReport(report)
@@ -76,6 +88,7 @@ class ReportFragment : Fragment() {
         binding.buttonAddNewWork.setOnClickListener {
             val newWorkItemView = NewWorkItemBinding.inflate(inflater)
             binding.newWorkRecyclerView.addView(newWorkItemView.root)
+            setTypicalWorkAdapter()
             newWorkItemView.buttonAddNewMaterial.setOnClickListener {
                 val materialView = NewMaterialItemBinding.inflate(inflater)
                 newWorkItemView.newMaterialRecyclerView.addView(materialView.root)
@@ -122,12 +135,12 @@ class ReportFragment : Fragment() {
     private fun showReport(report: Report) {
         binding.foremanEditText.setText(report.foreman?.name)
         binding.reportIdEditText.setText(report.reportId)
-        binding.constructionObjectEditTextForEnter.setText(report.constructionObject)
+        binding.autoCompleteConstructionObject.setText(report.constructionObject?.name)
         binding.dateFromDateAndTime.setText(report.dateOfWork)
         binding.timeFromDateAndTime.setText(report.timeOfWork)
         report.typeOfWorkList.forEach { work ->
             val workView = NewWorkItemBinding.inflate(layoutInflater)
-            workView.typicalWorkEditTextForEnter.setText(work.typicalWork?.typeOfWork.toString())
+            workView.typicalWorkEditText.setText(work.typicalWork?.typeOfWork.toString())
             workView.pkStartEditTextForEnter.setText(work.location?.beginningPiket)
             workView.plusStartEditTextForEnter.setText(work.location?.beginningPlus)
             workView.pkEndEditTextForEnter.setText(work.location?.endingPiket)
@@ -160,7 +173,7 @@ class ReportFragment : Fragment() {
 
         val workList = binding.newWorkRecyclerView.children.map { work ->
             val typeOfWork =
-                work.findViewById<TextInputEditText>(R.id.typical_work_edit_text_for_enter).text.toString()
+                work.findViewById<TextInputEditText>(R.id.typical_work_edit_text).text.toString()
             val beginningPiket = work.findViewById<TextInputEditText>(R.id.pk_start_edit_text_for_enter).text.toString()
             val beginningPlus = work.findViewById<TextInputEditText>(R.id.plus_start_edit_text_for_enter).text.toString()
             val endingPiket = work.findViewById<TextInputEditText>(R.id.pk_end_edit_text_for_enter).text.toString()
@@ -204,13 +217,48 @@ class ReportFragment : Fragment() {
             )
         }.toList()
         val updatedReport = report.copy(
-            constructionObject = binding.constructionObjectEditTextForEnter.text.toString(),
+            constructionObject = ConstructionObject(binding.autoCompleteConstructionObject.text.toString()),
             dateOfWork = binding.dateFromDateAndTime.text.toString(),
             timeOfWork = binding.timeFromDateAndTime.text.toString(),
             typeOfWorkList = workList)
         firebase.child(updatedReport.reportId).setValue(updatedReport)
 
         findNavController().navigate(R.id.action_ReportFragment_to_ListReportFragment)
+    }
+    fun setConstructionObjectAdapter() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.constructionObjectFlow.collect {
+                    constructionObjectList = it
+                    val adapter = ArrayAdapter(
+                        requireContext(),
+                        android.R.layout.simple_list_item_1,
+                        it.map { it.name })
+                    binding.autoCompleteConstructionObject.setAdapter(adapter)
+                    binding.autoCompleteConstructionObject.threshold = 1
+                }
+            }
+        }
+    }
+
+    fun setTypicalWorkAdapter() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.typicalWorkFlow.collect {
+                    typicalWorkList = it
+                    val adapter = ArrayAdapter(
+                        requireContext(),
+                        android.R.layout.simple_list_item_1,
+                        it.map { it.typeOfWork })
+                    Log.e("++++++", typicalWorkList.toString())
+                    binding.newWorkRecyclerView.children.map {work ->
+                        work.findViewById<AutoCompleteTextView>(R.id.typical_work_edit_text).setAdapter(adapter)
+                        work.findViewById<AutoCompleteTextView>(R.id.typical_work_edit_text).threshold = 1
+                    }
+                }
+            }
+
+        }
     }
 
 }

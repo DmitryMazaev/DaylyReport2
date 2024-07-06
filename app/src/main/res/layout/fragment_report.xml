@@ -33,7 +33,7 @@
                 android:id="@+id/report_id_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                tools:ignore="Deprecated" />
         </com.google.android.material.textfield.TextInputLayout>
         <TextView
             style="@style/heading_report_style"
@@ -45,29 +45,23 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/construction_object_text"
             />
-        <com.google.android.material.textfield.TextInputLayout
+
+        <AutoCompleteTextView
             style="@style/edit_text_report_style"
-            android:id="@+id/construction_object_edit_text"
+            android:id="@+id/autoComplete_construction_object"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/construction_object_text"
-            app:layout_constraintStart_toStartOf="@+id/construction_object_text"
-            app:layout_constraintEnd_toEndOf="@+id/construction_object_text"
             android:hint="@string/construction_object_edit_text"
-            app:endIconMode="clear_text">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/construction_object_edit_text_for_enter"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/construction_object_text"/>
         <LinearLayout
             android:id="@+id/button_gpoup"
             android:orientation="horizontal"
             android:baselineAligned="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/construction_object_edit_text">
+            app:layout_constraintTop_toBottomOf="@+id/autoComplete_construction_object">
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"

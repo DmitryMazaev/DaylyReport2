@@ -47,7 +47,7 @@
     <string name="login_text">ЛОГИН ПОЛЬЗОВАТЕЛЯ:</string>
     <string name="login_edit_text">введите логин пользователя</string>
     <string name="password_text">ПАРОЛЬ:</string>
-    <string name="password_edit_text">ведите пароль</string>
+    <string name="password_edit_text">введите пароль</string>
     <string name="button_autorisation_text">ВОЙТИ</string>
     <string name="autorisation_fragment_label">АВТОРИЗАЦИЯ</string>
     <string name="foreman_one_text">производитель работ</string>
@@ -62,6 +62,8 @@
     <string name="personnel_edit_text">выберите персонал</string>
     <string name="quantity_of_personnel_text">Время работы:</string>
     <string name="quantity_of_personnel_edit_text">Время работы:</string>
+    <string name="name_edit_text">введите имя пользователя</string>
+    <string name="name_text">ИМЯ ПОЛЬЗОВАТЕЛЯ:</string>
 
 
     quantity_of_work_text

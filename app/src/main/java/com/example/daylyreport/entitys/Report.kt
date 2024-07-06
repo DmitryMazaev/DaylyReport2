@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 data class Report(
     val reportId: String = FirebaseDatabase.getInstance().getReference("reportList").push().key!!.toString(),
     //Наименование строительного объекта
-    val constructionObject: String? = "",
+    val constructionObject: ConstructionObject? = null,
     //Дата начала производства работ
     val dateOfWork: String? = "",
     //Время начала производства работ

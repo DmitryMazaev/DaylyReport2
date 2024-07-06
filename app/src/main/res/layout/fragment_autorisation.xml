@@ -12,10 +12,30 @@
         android:id="@+id/autorisation_fragment">
         <TextView
             style="@style/heading_report_style"
-            android:id="@+id/login_text"
+            android:id="@+id/name_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/name_text"
+            />
+        <AutoCompleteTextView
+            style="@style/edit_text_report_style"
+            android:id="@+id/autoComplete_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/name_edit_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/name_text"/>
+
+        <TextView
+            style="@style/heading_report_style"
+            android:id="@+id/login_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/autoComplete_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/login_text"
@@ -28,29 +48,20 @@
             app:layout_constraintTop_toBottomOf="@+id/login_text"
             app:layout_constraintStart_toStartOf="@+id/login_text"
             app:layout_constraintEnd_toEndOf="@+id/login_text"
-            android:hint="@string/login_edit_text"
-            app:endIconMode="clear_text">
+            >
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_id_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                tools:ignore="Deprecated"
                 />
         </com.google.android.material.textfield.TextInputLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/foremans_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_edit_text"
-            android:layout_marginVertical="10dp"/>
         <TextView
             style="@style/heading_report_style"
             android:id="@+id/construction_object_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/foremans_recycler_view"
+            app:layout_constraintTop_toBottomOf="@+id/login_edit_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/password_text"
@@ -64,11 +75,13 @@
             app:layout_constraintStart_toStartOf="@+id/construction_object_text"
             app:layout_constraintEnd_toEndOf="@+id/construction_object_text"
             android:hint="@string/password_edit_text"
-            app:endIconMode="clear_text">
+            app:endIconMode="clear_text"
+            >
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_edit_text_for_enter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textPassword"
                 />
         </com.google.android.material.textfield.TextInputLayout>
         <Button
@@ -80,15 +93,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password_edit_text"/>
-        <AutoCompleteTextView
-            style="@style/edit_text_report_style"
-            android:id="@+id/autoComplete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/login_edit_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_autorisation"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
