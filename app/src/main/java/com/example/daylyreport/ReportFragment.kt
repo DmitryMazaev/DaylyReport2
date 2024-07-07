@@ -168,52 +168,58 @@ class ReportFragment : Fragment() {
     }
 
     private fun addNewReport(report: Report) {
-
-        val workList = binding.newWorkRecyclerView.children.map { work ->
-            val typeOfWork =
-                work.findViewById<AutoCompleteTextView>(R.id.typical_work_edit_text).text.toString()
-            val beginningPiket = work.findViewById<TextInputEditText>(R.id.pk_start_edit_text_for_enter).text.toString()
-            val beginningPlus = work.findViewById<TextInputEditText>(R.id.plus_start_edit_text_for_enter).text.toString()
-            val endingPiket = work.findViewById<TextInputEditText>(R.id.pk_end_edit_text_for_enter).text.toString()
-            val endingPlus = work.findViewById<TextInputEditText>(R.id.plus_end_edit_text_for_enter).text.toString()
-            val comment =
-                work.findViewById<TextInputEditText>(R.id.location_comment_edit_text_for_enter).text.toString()
-            val quantityOfWork = work.findViewById<TextInputEditText>(R.id.quantity_of_work_edit_text_for_enter).text.toString()
-            val materials = work.findViewById<LinearLayout>(R.id.new_material_recycler_view)
-            val materialList = materials.children.map { materialView ->
-                val material =
-                    materialView.findViewById<AutoCompleteTextView>(R.id.material_edit_text).text.toString()
-                val quantity =
-                    materialView.findViewById<TextInputEditText>(R.id.quantity_of_material_edit_text_for_enter).text.toString()
-                        .toDouble()
-                Material(material, quantity)
+        
+        val workList = try {
+            binding.newWorkRecyclerView.children.map { work ->
+                val typeOfWork =
+                    work.findViewById<AutoCompleteTextView>(R.id.typical_work_edit_text).text.toString()
+                if (typeOfWork.isBlank()) throw RuntimeException("type of work is blank")
+                val beginningPiket = work.findViewById<TextInputEditText>(R.id.pk_start_edit_text_for_enter).text.toString()
+                val beginningPlus = work.findViewById<TextInputEditText>(R.id.plus_start_edit_text_for_enter).text.toString()
+                val endingPiket = work.findViewById<TextInputEditText>(R.id.pk_end_edit_text_for_enter).text.toString()
+                val endingPlus = work.findViewById<TextInputEditText>(R.id.plus_end_edit_text_for_enter).text.toString()
+                val comment =
+                    work.findViewById<TextInputEditText>(R.id.location_comment_edit_text_for_enter).text.toString()
+                val quantityOfWork = work.findViewById<TextInputEditText>(R.id.quantity_of_work_edit_text_for_enter).text.toString()
+                val materials = work.findViewById<LinearLayout>(R.id.new_material_recycler_view)
+                val materialList = materials.children.map { materialView ->
+                    val material =
+                        materialView.findViewById<AutoCompleteTextView>(R.id.material_edit_text).text.toString()
+                    val quantity =
+                        materialView.findViewById<TextInputEditText>(R.id.quantity_of_material_edit_text_for_enter).text.toString()
+                            .toDouble()
+                    Material(material, quantity)
+                }.toList()
+                val transports = work.findViewById<LinearLayout>(R.id.new_transport_recycler_view)
+                val transportList = transports.children.map { transportView ->
+                    val transport =
+                        transportView.findViewById<AutoCompleteTextView>(R.id.transport_edit_text).text.toString()
+                    val quantity =
+                        transportView.findViewById<TextInputEditText>(R.id.quantity_of_transport_edit_text_for_enter).text.toString()
+                            .toDouble()
+                    TransportVehicle(transport, quantity)
+                }.toList()
+                val personnel = work.findViewById<LinearLayout>(R.id.new_personnel_recycler_view)
+                val personnelList = personnel.children.map { personView ->
+                    val person =
+                        personView.findViewById<AutoCompleteTextView>(R.id.personnel_edit_text).text.toString()
+                    val quantity =
+                        personView.findViewById<TextInputEditText>(R.id.quantity_of_personnel_edit_text_for_enter).text.toString()
+                            .toDouble()
+                    Personnel(person, quantity)
+                }.toList()
+                TypeOfWork(
+                    TypicalWork(typeOfWork = typeOfWork, quantityOfWork = quantityOfWork.toDouble()),
+                    Location(beginningPiket = beginningPiket, beginningPlus = beginningPlus, endingPiket = endingPiket, endingPlus = endingPlus, commentLocation = comment),
+                    materialList,
+                    transportList,
+                    personnelList
+                )
             }.toList()
-            val transports = work.findViewById<LinearLayout>(R.id.new_transport_recycler_view)
-            val transportList = transports.children.map { transportView ->
-                val transport =
-                    transportView.findViewById<AutoCompleteTextView>(R.id.transport_edit_text).text.toString()
-                val quantity =
-                    transportView.findViewById<TextInputEditText>(R.id.quantity_of_transport_edit_text_for_enter).text.toString()
-                        .toDouble()
-                TransportVehicle(transport, quantity)
-            }.toList()
-            val personnel = work.findViewById<LinearLayout>(R.id.new_personnel_recycler_view)
-            val personnelList = personnel.children.map { personView ->
-                val person =
-                    personView.findViewById<AutoCompleteTextView>(R.id.personnel_edit_text).text.toString()
-                val quantity =
-                    personView.findViewById<TextInputEditText>(R.id.quantity_of_personnel_edit_text_for_enter).text.toString()
-                        .toDouble()
-                Personnel(person, quantity)
-            }.toList()
-            TypeOfWork(
-                TypicalWork(typeOfWork = typeOfWork, quantityOfWork = quantityOfWork.toDouble()),
-                Location(beginningPiket = beginningPiket, beginningPlus = beginningPlus, endingPiket = endingPiket, endingPlus = endingPlus, commentLocation = comment),
-                materialList,
-                transportList,
-                personnelList
-            )
-        }.toList()
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), "asdad", Toast.LENGTH_SHORT).show()
+            return
+        }
         val updatedReport = report.copy(
             reportId = binding.reportIdEditText.text.toString(),
             constructionObject = ConstructionObject(binding.autoCompleteConstructionObject.text.toString()),
