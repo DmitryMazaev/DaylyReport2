@@ -91,6 +91,7 @@ class ReportFragment : Fragment() {
             binding.newWorkRecyclerView.addView(newWorkItemView.root)
             newWorkItemView.buttonAddNewMaterial.setOnClickListener {
                 val materialView = NewMaterialItemBinding.inflate(inflater)
+                materialView.materialEditText.setAutocompleteAdapter(typicalMaterialList.map { it.nameOfMaterial })
                 newWorkItemView.newMaterialRecyclerView.addView(materialView.root)
             }
             newWorkItemView.buttonAddNewTransport.setOnClickListener {
@@ -258,8 +259,8 @@ class ReportFragment : Fragment() {
                     typicalMaterialList = it
                     binding.newWorkRecyclerView.children.forEach { work ->
                         val materials = work.findViewById<LinearLayout>(R.id.new_material_recycler_view)
-                        materials.children.map { materialView ->
-                            work.findViewById<AutoCompleteTextView>(R.id.material_edit_text)
+                        materials.children.forEach { materialView ->
+                            materialView.findViewById<AutoCompleteTextView>(R.id.material_edit_text)
                                 .setAutocompleteAdapter(it.map { it.nameOfMaterial })
                         }
                     }
