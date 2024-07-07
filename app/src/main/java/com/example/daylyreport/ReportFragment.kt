@@ -2,6 +2,7 @@ package com.example.daylyreport
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -56,6 +57,7 @@ class ReportFragment : Fragment() {
     private val calendar = Calendar.getInstance()
     private var constructionObjectList = listOf<ConstructionObject>()
     private var typicalWorkList = listOf<TypicalWork>()
+    private var typicalMaterialList = listOf<Material>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -78,6 +80,7 @@ class ReportFragment : Fragment() {
         showReport(report)
         setConstructionObjectAdapter()
         collectTypicalWorks()
+        collectMaterial()
         
         binding.buttonAddNewReport.setOnClickListener {
             addNewReport(report)
@@ -146,7 +149,7 @@ class ReportFragment : Fragment() {
             workView.quantityOfWorkEditTextForEnter.setText(work.typicalWork?.quantityOfWork.toString())
             work.materialList.forEach {
                 val materialView = NewMaterialItemBinding.inflate(layoutInflater)
-                materialView.materialEditTextForEnter.setText(it.nameOfMaterial)
+                materialView.materialEditText.setText(it.nameOfMaterial)
                 materialView.quantityOfMaterialEditTextForEnter.setText(it.quantityOfMaterial.toString())
                 workView.newMaterialRecyclerView.addView(materialView.root)
             }
@@ -170,7 +173,7 @@ class ReportFragment : Fragment() {
 
         val workList = binding.newWorkRecyclerView.children.map { work ->
             val typeOfWork =
-                work.findViewById<TextInputEditText>(R.id.typical_work_edit_text).text.toString()
+                work.findViewById<AutoCompleteTextView>(R.id.typical_work_edit_text).text.toString()
             val beginningPiket = work.findViewById<TextInputEditText>(R.id.pk_start_edit_text_for_enter).text.toString()
             val beginningPlus = work.findViewById<TextInputEditText>(R.id.plus_start_edit_text_for_enter).text.toString()
             val endingPiket = work.findViewById<TextInputEditText>(R.id.pk_end_edit_text_for_enter).text.toString()
@@ -181,7 +184,7 @@ class ReportFragment : Fragment() {
             val materials = work.findViewById<LinearLayout>(R.id.new_material_recycler_view)
             val materialList = materials.children.map { materialView ->
                 val material =
-                    materialView.findViewById<TextInputEditText>(R.id.material_edit_text_for_enter).text.toString()
+                    materialView.findViewById<TextInputEditText>(R.id.material_edit_text).text.toString()
                 val quantity =
                     materialView.findViewById<TextInputEditText>(R.id.quantity_of_material_edit_text_for_enter).text.toString()
                         .toDouble()
@@ -233,7 +236,7 @@ class ReportFragment : Fragment() {
         }
     }
 
-    fun collectTypicalWorks() {
+    private fun collectTypicalWorks() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.typicalWorkFlow.collect {
@@ -241,6 +244,24 @@ class ReportFragment : Fragment() {
                     binding.newWorkRecyclerView.children.forEach { work ->
                         work.findViewById<AutoCompleteTextView>(R.id.typical_work_edit_text)
                             .setAutocompleteAdapter(it.map { it.typeOfWork })
+                    }
+                }
+            }
+
+        }
+    }
+
+    private fun collectMaterial() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.typicalMaterialFlow.collect {
+                    typicalMaterialList = it
+                    binding.newWorkRecyclerView.children.forEach { work ->
+                        val materials = work.findViewById<LinearLayout>(R.id.new_material_recycler_view)
+                        materials.children.map { materialView ->
+                            work.findViewById<AutoCompleteTextView>(R.id.material_edit_text)
+                                .setAutocompleteAdapter(it.map { it.nameOfMaterial })
+                        }
                     }
                 }
             }

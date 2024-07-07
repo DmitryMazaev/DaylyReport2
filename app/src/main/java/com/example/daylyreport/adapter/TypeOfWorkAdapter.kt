@@ -105,10 +105,10 @@ class MaterialView @JvmOverloads constructor(
     }
 
     fun setALlText(text: String) {
-        binding.materialEditTextForEnter.setText(text)
+        binding.materialEditText.setText(text)
     }
 
     fun getMaterialName(): String {
-        return  binding.materialEditTextForEnter.text.toString()
+        return  binding.materialEditText.text.toString()
     }
 }

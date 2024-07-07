@@ -26,7 +26,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:hint="@string/typical_work_edit_text"
-            app:endIconMode="clear_text"/>
+            />
         <TextView
             style="@style/heading_report_style"
             android:id="@+id/location_start_text"
