@@ -173,7 +173,7 @@ class ReportFragment : Fragment() {
             binding.newWorkRecyclerView.children.map { work ->
                 val typeOfWork =
                     work.findViewById<AutoCompleteTextView>(R.id.typical_work_edit_text).text.toString()
-                if (typeOfWork.isBlank()) throw RuntimeException("type of work is blank")
+                if (typeOfWork.isBlank()) throw RuntimeException("Вид работ не заполнен")
                 val beginningPiket = work.findViewById<TextInputEditText>(R.id.pk_start_edit_text_for_enter).text.toString()
                 val beginningPlus = work.findViewById<TextInputEditText>(R.id.plus_start_edit_text_for_enter).text.toString()
                 val endingPiket = work.findViewById<TextInputEditText>(R.id.pk_end_edit_text_for_enter).text.toString()
@@ -217,7 +217,7 @@ class ReportFragment : Fragment() {
                 )
             }.toList()
         } catch (e: Exception) {
-            Toast.makeText(requireContext(), "asdad", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Поля с количеством должны быть заполнены", Toast.LENGTH_SHORT).show()
             return
         }
         val updatedReport = report.copy(
