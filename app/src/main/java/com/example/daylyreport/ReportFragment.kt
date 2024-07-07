@@ -19,6 +19,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.daylyreport.classes.ReportViewModel
+import com.example.daylyreport.data.UserInfoRepository
 import com.example.daylyreport.databinding.FragmentReportBinding
 import com.example.daylyreport.databinding.NewMaterialItemBinding
 import com.example.daylyreport.databinding.NewPersonnelItemBinding
@@ -82,6 +83,10 @@ class ReportFragment : Fragment() {
         collectTypicalWorks()
         collectMaterial()
         
+        
+        binding.buttonCopyReport.setOnClickListener {
+            copyReport()
+        }
         binding.buttonAddNewReport.setOnClickListener {
             addNewReport(report)
         }
@@ -218,14 +223,22 @@ class ReportFragment : Fragment() {
             )
         }.toList()
         val updatedReport = report.copy(
+            reportId = binding.reportIdEditText.text.toString(),
             constructionObject = ConstructionObject(binding.autoCompleteConstructionObject.text.toString()),
             dateOfWork = binding.dateFromDateAndTime.text.toString(),
             timeOfWork = binding.timeFromDateAndTime.text.toString(),
-            typeOfWorkList = workList)
+            typeOfWorkList = workList
+        )
         firebase.child(updatedReport.reportId).setValue(updatedReport)
 
         findNavController().navigate(R.id.action_ReportFragment_to_ListReportFragment)
     }
+    
+    fun copyReport() {
+        binding.reportIdEditText.setText(FirebaseDatabase.getInstance().getReference("reportList").push().key!!.toString())
+        binding.foremanEditText.setText(UserInfoRepository.getUser().name)
+    }
+    
     fun setConstructionObjectAdapter() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
