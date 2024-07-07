@@ -27,6 +27,7 @@ import com.example.daylyreport.databinding.NewPersonnelItemBinding
 import com.example.daylyreport.databinding.NewTransportItemBinding
 import com.example.daylyreport.databinding.NewWorkItemBinding
 import com.example.daylyreport.entitys.ConstructionObject
+import com.example.daylyreport.entitys.Foreman
 import com.example.daylyreport.entitys.Location
 import com.example.daylyreport.entitys.Material
 import com.example.daylyreport.entitys.Personnel
@@ -218,7 +219,8 @@ class ReportFragment : Fragment() {
             constructionObject = ConstructionObject(binding.autoCompleteConstructionObject.text.toString()),
             dateOfWork = binding.dateFromDateAndTime.text.toString(),
             timeOfWork = binding.timeFromDateAndTime.text.toString(),
-            typeOfWorkList = workList
+            typeOfWorkList = workList,
+            foreman = Foreman(binding.foremanEditText.text.toString())
         )
         firebase.child(updatedReport.reportId).setValue(updatedReport)
 
