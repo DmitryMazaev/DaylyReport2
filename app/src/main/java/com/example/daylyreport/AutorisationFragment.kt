@@ -62,7 +62,7 @@ class AutorisationFragment : Fragment() {
             }
         }
         binding.autoCompleteName.setOnItemClickListener { _, _, _, _ ->
-            binding.loginIdEditText.setText(viewModel.checkPLogin(binding.autoCompleteName.text.toString(), foremanList))
+            binding.loginIdEditText.setText(viewModel.checkLogin(binding.autoCompleteName.text.toString(), foremanList))
         }
 
         binding.buttonAutorisation.setOnClickListener {

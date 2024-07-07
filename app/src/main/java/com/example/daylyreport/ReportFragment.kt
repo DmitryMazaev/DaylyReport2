@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.os.BundleCompat
 import androidx.core.view.children
@@ -19,6 +20,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.daylyreport.classes.ReportViewModel
+import com.example.daylyreport.data.UserInfoRepository
 import com.example.daylyreport.databinding.FragmentReportBinding
 import com.example.daylyreport.databinding.NewMaterialItemBinding
 import com.example.daylyreport.databinding.NewPersonnelItemBinding
@@ -47,9 +49,9 @@ import java.util.Calendar
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class ReportFragment : Fragment() {
-    
+
     private var _binding: FragmentReportBinding? = null
-    
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -58,6 +60,8 @@ class ReportFragment : Fragment() {
     private var constructionObjectList = listOf<ConstructionObject>()
     private var typicalWorkList = listOf<TypicalWork>()
     private var typicalMaterialList = listOf<Material>()
+    private var typicalTransportList = listOf<TransportVehicle>()
+    private var typicalPersonnelList = listOf<Personnel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,25 +69,30 @@ class ReportFragment : Fragment() {
         _binding = FragmentReportBinding.inflate(inflater, container, false)
         return binding.root
     }
-    
+
     private val firebase = FirebaseDatabase.getInstance().getReference("reportList")
-    
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val inflater = LayoutInflater.from(requireContext())
-        
+
         val report = arguments?.let {
             BundleCompat.getParcelable(it, REPORT_KEY, Report::class.java)
         } ?: Report()
-        
+
         showReport(report)
         setConstructionObjectAdapter()
         collectTypicalWorks()
         collectMaterial()
-        
+        collectTransport()
+        collectPersonnel()
+        binding.buttonCopyReport.setOnClickListener {
+            copyReport()
+        }
         binding.buttonAddNewReport.setOnClickListener {
             addNewReport(report)
+
         }
         binding.buttonAddNewWork.setOnClickListener {
             val newWorkItemView = NewWorkItemBinding.inflate(inflater)
@@ -91,47 +100,35 @@ class ReportFragment : Fragment() {
             binding.newWorkRecyclerView.addView(newWorkItemView.root)
             newWorkItemView.buttonAddNewMaterial.setOnClickListener {
                 val materialView = NewMaterialItemBinding.inflate(inflater)
+                materialView.materialEditText.setAutocompleteAdapter(typicalMaterialList.map { it.nameOfMaterial })
                 newWorkItemView.newMaterialRecyclerView.addView(materialView.root)
             }
             newWorkItemView.buttonAddNewTransport.setOnClickListener {
                 val transportView = NewTransportItemBinding.inflate(inflater)
+                transportView.transportEditText.setAutocompleteAdapter(typicalTransportList.map { it.transportNumber })
                 newWorkItemView.newTransportRecyclerView.addView(transportView.root)
             }
             newWorkItemView.buttonAddNewPersonnel.setOnClickListener {
                 val personnelView = NewPersonnelItemBinding.inflate(inflater)
+                personnelView.personnelEditText.setAutocompleteAdapter(typicalPersonnelList.map { it.personnelType })
                 newWorkItemView.newPersonnelRecyclerView.addView(personnelView.root)
             }
         }
-        
+
         binding.buttonDate.setOnClickListener {
-            val dateDialog = MaterialDatePicker.Builder.datePicker()
-                .build()
-            
-            dateDialog.addOnPositiveButtonClickListener {timeInMillis ->
-                calendar.timeInMillis = timeInMillis
-                val dateFormat = SimpleDateFormat("dd-MM-yyyy")
-                Snackbar.make(binding.buttonDate, dateFormat.format(calendar.time), Snackbar.LENGTH_SHORT).show()
-                binding.dateFromDateAndTime.text = dateFormat.format(calendar.time)
-            }
-            dateDialog.show(parentFragmentManager, "DatePicker")
+            enterDate()
         }
-        
+
         binding.buttonTime.setOnClickListener {
-            val timePicker = MaterialTimePicker.Builder().build()
-            timePicker.addOnPositiveButtonClickListener {
-                val time = LocalTime.of(timePicker.hour, timePicker.minute)
-                val dtf = DateTimeFormatter.ofPattern("HH:mm")
-                binding.timeFromDateAndTime.text = time.format(dtf)
-            }
-            timePicker.show(parentFragmentManager, null)
+            enterTime()
         }
-        
+
     }
-    
+
     companion object {
         const val REPORT_KEY = "report"
     }
-    
+
     private fun showReport(report: Report) {
         binding.foremanEditText.setText(report.foreman?.name)
         binding.reportIdEditText.setText(report.reportId)
@@ -155,13 +152,13 @@ class ReportFragment : Fragment() {
             }
             work.transportVehicleList.forEach {
                 val transportView = NewTransportItemBinding.inflate(layoutInflater)
-                transportView.transportEditTextForEnter.setText(it.transportNumber)
+                transportView.transportEditText.setText(it.transportNumber)
                 transportView.quantityOfTransportEditTextForEnter.setText(it.timeOfWorkTransport.toString())
                 workView.newTransportRecyclerView.addView(transportView.root)
             }
             work.personnelList.forEach {
                 val personnelView = NewPersonnelItemBinding.inflate(layoutInflater)
-                personnelView.personnelEditTextForEnter.setText(it.personnelType)
+                personnelView.personnelEditText.setText(it.personnelType)
                 personnelView.quantityOfPersonnelEditTextForEnter.setText(it.timeOfWorkPersonnel.toString())
                 workView.newPersonnelRecyclerView.addView(personnelView.root)
             }
@@ -184,7 +181,7 @@ class ReportFragment : Fragment() {
             val materials = work.findViewById<LinearLayout>(R.id.new_material_recycler_view)
             val materialList = materials.children.map { materialView ->
                 val material =
-                    materialView.findViewById<TextInputEditText>(R.id.material_edit_text).text.toString()
+                    materialView.findViewById<AutoCompleteTextView>(R.id.material_edit_text).text.toString()
                 val quantity =
                     materialView.findViewById<TextInputEditText>(R.id.quantity_of_material_edit_text_for_enter).text.toString()
                         .toDouble()
@@ -193,7 +190,7 @@ class ReportFragment : Fragment() {
             val transports = work.findViewById<LinearLayout>(R.id.new_transport_recycler_view)
             val transportList = transports.children.map { transportView ->
                 val transport =
-                    transportView.findViewById<TextInputEditText>(R.id.transport_edit_text_for_enter).text.toString()
+                    transportView.findViewById<AutoCompleteTextView>(R.id.transport_edit_text).text.toString()
                 val quantity =
                     transportView.findViewById<TextInputEditText>(R.id.quantity_of_transport_edit_text_for_enter).text.toString()
                         .toDouble()
@@ -202,7 +199,7 @@ class ReportFragment : Fragment() {
             val personnel = work.findViewById<LinearLayout>(R.id.new_personnel_recycler_view)
             val personnelList = personnel.children.map { personView ->
                 val person =
-                    personView.findViewById<TextInputEditText>(R.id.personnel_edit_text_for_enter).text.toString()
+                    personView.findViewById<AutoCompleteTextView>(R.id.personnel_edit_text).text.toString()
                 val quantity =
                     personView.findViewById<TextInputEditText>(R.id.quantity_of_personnel_edit_text_for_enter).text.toString()
                         .toDouble()
@@ -217,15 +214,23 @@ class ReportFragment : Fragment() {
             )
         }.toList()
         val updatedReport = report.copy(
+            reportId = binding.reportIdEditText.text.toString(),
             constructionObject = ConstructionObject(binding.autoCompleteConstructionObject.text.toString()),
             dateOfWork = binding.dateFromDateAndTime.text.toString(),
             timeOfWork = binding.timeFromDateAndTime.text.toString(),
-            typeOfWorkList = workList)
+            typeOfWorkList = workList
+        )
         firebase.child(updatedReport.reportId).setValue(updatedReport)
 
         findNavController().navigate(R.id.action_ReportFragment_to_ListReportFragment)
     }
-    fun setConstructionObjectAdapter() {
+
+    private fun copyReport() {
+        binding.reportIdEditText.setText(FirebaseDatabase.getInstance().getReference("reportList").push().key!!.toString())
+        binding.foremanEditText.setText(UserInfoRepository.getUser().name)
+    }
+
+    private fun setConstructionObjectAdapter() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.constructionObjectFlow.collect {
@@ -258,8 +263,8 @@ class ReportFragment : Fragment() {
                     typicalMaterialList = it
                     binding.newWorkRecyclerView.children.forEach { work ->
                         val materials = work.findViewById<LinearLayout>(R.id.new_material_recycler_view)
-                        materials.children.map { materialView ->
-                            work.findViewById<AutoCompleteTextView>(R.id.material_edit_text)
+                        materials.children.forEach { materialView ->
+                            materialView.findViewById<AutoCompleteTextView>(R.id.material_edit_text)
                                 .setAutocompleteAdapter(it.map { it.nameOfMaterial })
                         }
                     }
@@ -268,7 +273,43 @@ class ReportFragment : Fragment() {
 
         }
     }
-    
+
+    private fun collectTransport() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.typicalTransportFlow.collect {
+                    typicalTransportList = it
+                    binding.newWorkRecyclerView.children.forEach { work ->
+                        val transport = work.findViewById<LinearLayout>(R.id.new_transport_recycler_view)
+                        transport.children.forEach { transportView ->
+                            transportView.findViewById<AutoCompleteTextView>(R.id.transport_edit_text)
+                                .setAutocompleteAdapter(it.map { it.transportNumber })
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
+    private fun collectPersonnel() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.typicalPersonnelFlow.collect {
+                    typicalPersonnelList = it
+                    binding.newWorkRecyclerView.children.forEach { work ->
+                        val personnel = work.findViewById<LinearLayout>(R.id.new_personnel_recycler_view)
+                        personnel.children.forEach { personnelView ->
+                            personnelView.findViewById<AutoCompleteTextView>(R.id.personnel_edit_text)
+                                .setAutocompleteAdapter(it.map { it.personnelType })
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
     private fun AutoCompleteTextView.setAutocompleteAdapter(stringList: List<String>) {
         val adapter = ArrayAdapter(
             requireContext(),
@@ -278,5 +319,30 @@ class ReportFragment : Fragment() {
         setAdapter(adapter)
         threshold = 1
     }
+
+    private fun enterDate() {
+        val dateDialog = MaterialDatePicker.Builder.datePicker()
+            .build()
+
+        dateDialog.addOnPositiveButtonClickListener {timeInMillis ->
+            calendar.timeInMillis = timeInMillis
+            val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+            Snackbar.make(binding.buttonDate, dateFormat.format(calendar.time), Snackbar.LENGTH_SHORT).show()
+            binding.dateFromDateAndTime.text = dateFormat.format(calendar.time)
+        }
+        dateDialog.show(parentFragmentManager, "DatePicker")
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun enterTime() {
+        val timePicker = MaterialTimePicker.Builder().build()
+        timePicker.addOnPositiveButtonClickListener {
+            val time = LocalTime.of(timePicker.hour, timePicker.minute)
+            val dtf = DateTimeFormatter.ofPattern("HH:mm")
+            binding.timeFromDateAndTime.text = time.format(dtf)
+        }
+        timePicker.show(parentFragmentManager, null)
+    }
+
 }
 

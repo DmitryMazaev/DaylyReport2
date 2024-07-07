@@ -45,7 +45,7 @@ class AutorisationViewModel: ViewModel() {
         return false
     }
 
-    fun checkPLogin(name: String, foremanList: List<Foreman>) : String{
+    fun checkLogin(name: String, foremanList: List<Foreman>) : String{
         for (foreman in foremanList) {
             if (foreman.name.equals(name) ) {
                 return foreman.login

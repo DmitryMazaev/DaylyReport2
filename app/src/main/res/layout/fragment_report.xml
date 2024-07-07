@@ -62,32 +62,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/autoComplete_construction_object">
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5">
-            <Button
-                style="@style/button_style"
-                android:id="@+id/buttonDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/button_date_text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5">
-            <Button
-                android:id="@+id/buttonTime"
-                style="@style/button_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/button_time_text"
-                app:layout_constraintStart_toStartOf="parent" />
-        </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5">
+                <Button
+                    style="@style/button_style"
+                    android:id="@+id/buttonDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_date_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5">
+                <Button
+                    android:id="@+id/buttonTime"
+                    style="@style/button_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_time_text"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </RelativeLayout>
         </LinearLayout>
         <TextView
             android:id="@+id/date_text"
@@ -149,7 +149,8 @@
             android:text="@string/button_add_new_report_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_add_new_work"/>
+            app:layout_constraintTop_toBottomOf="@+id/button_add_new_work"
+            />
 
         <TextView
             style="@style/heading_report_style"
@@ -175,5 +176,15 @@
                 android:layout_height="wrap_content"
                 />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            style="@style/button_style"
+            android:id="@+id/button_copy_report"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAllCaps="true"
+            android:text="Скопировать отчет"
+            app:layout_constraintTop_toBottomOf="@id/foreman"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

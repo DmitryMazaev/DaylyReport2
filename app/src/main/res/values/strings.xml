@@ -36,7 +36,7 @@
     <string name="transport_vehicle_edit_text">нажмите, чтобы выбрать транспортное средство</string>
     <string name="quantity_of_transport_vehicle_text">Время работы транспортного средства:</string>
     <string name="quantity_of_transport_vehicle_edit_text">введите время работы транспортного средства</string>
-    <string name="button_add_new_report_text">ДОБАВИТЬ ОТЧЕТ</string>
+    <string name="button_add_new_report_text">ОТПРАВИТЬ ОТЧЕТ</string>
     <string name="button_update_report_text">ОБНОВИТЬ ОТЧЕТ</string>
     <string name="list_report_text">Сменные отчеты:</string>
     <string name="button_new_report">НОВЫЙ ОТЧЕТ</string>
@@ -64,6 +64,7 @@
     <string name="quantity_of_personnel_edit_text">Время работы:</string>
     <string name="name_edit_text">введите имя пользователя</string>
     <string name="name_text">ИМЯ ПОЛЬЗОВАТЕЛЯ:</string>
+    <string name="zero">0.0</string>
 
 
     quantity_of_work_text
