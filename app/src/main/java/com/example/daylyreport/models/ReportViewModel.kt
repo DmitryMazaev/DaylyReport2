@@ -1,4 +1,4 @@
-package com.example.daylyreport.classes
+package com.example.daylyreport.models
 import androidx.lifecycle.ViewModel
 import com.example.daylyreport.entitys.ConstructionObject
 import com.example.daylyreport.entitys.Material

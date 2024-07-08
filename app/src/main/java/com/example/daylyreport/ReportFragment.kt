@@ -2,7 +2,6 @@ package com.example.daylyreport
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +18,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.daylyreport.classes.ReportViewModel
+import com.example.daylyreport.models.ReportViewModel
 import com.example.daylyreport.data.UserInfoRepository
 import com.example.daylyreport.databinding.FragmentReportBinding
 import com.example.daylyreport.databinding.NewMaterialItemBinding
@@ -173,7 +172,7 @@ class ReportFragment : Fragment() {
             binding.newWorkRecyclerView.children.map { work ->
                 val typeOfWork =
                     work.findViewById<AutoCompleteTextView>(R.id.typical_work_edit_text).text.toString()
-                if (typeOfWork.isBlank()) throw RuntimeException("Вид работ не заполнен")
+                if (typeOfWork.isBlank()) throw RuntimeException("Все созданные поля должны быть заполнены")
                 val beginningPiket = work.findViewById<TextInputEditText>(R.id.pk_start_edit_text_for_enter).text.toString()
                 val beginningPlus = work.findViewById<TextInputEditText>(R.id.plus_start_edit_text_for_enter).text.toString()
                 val endingPiket = work.findViewById<TextInputEditText>(R.id.pk_end_edit_text_for_enter).text.toString()
