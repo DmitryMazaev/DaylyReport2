@@ -19,11 +19,6 @@ import com.google.android.material.textfield.TextInputEditText
 class TypeOfWorkAdapter() : RecyclerView.Adapter<TypeOfWorkAdapter.ViewHolder>() {
     private var countElements: Int = 0
 
-    fun setData() {
-        countElements +=1
-        notifyDataSetChanged()
-
-    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             NewWorkItemBinding.inflate(
@@ -39,47 +34,7 @@ class TypeOfWorkAdapter() : RecyclerView.Adapter<TypeOfWorkAdapter.ViewHolder>()
         holder.binding.buttonAddNewMaterial.setOnClickListener {
             val view = MaterialView(context)
             holder.binding.newMaterialRecyclerView.addView(view)
-            /*materials.forEach {
-                val view = MaterialView(context)
-                //view.setALlText(it.toString())
-                holder.binding.newMaterialRecyclerView.addView(view)
-                *//*holder.binding.newMaterialRecyclerView.children.forEach {
-                    (it as? MaterialView)?.let {
-                     it.setALlText()
-                    }
-                }
-
-                val view2 = holder.binding.newMaterialRecyclerView.children.find {
-                    (it as? MaterialView)?.materialId == "myId"
-                } as MaterialView
-                view.setALlText()*//*
-
-                val materials = holder.binding.newMaterialRecyclerView.children
-                    .mapNotNull { it as? MaterialView }
-                    .map { view ->
-                        // view.createMaterial()
-                        val mateName = view.getMaterialName()
-
-                        Material(
-                            mateName,
-                            "",
-                            1.0
-                        )
-                    }
-            }*/
         }
-
-
-        /*
-
-        offers.forech { offer ->
-            item { Offer() }
-            offer.materials.forEch {
-                item { Material }
-            }
-        }
-
-         */
     }
 
     override fun getItemCount(): Int {
@@ -87,28 +42,16 @@ class TypeOfWorkAdapter() : RecyclerView.Adapter<TypeOfWorkAdapter.ViewHolder>()
     }
 
     class ViewHolder(val binding: NewWorkItemBinding) : RecyclerView.ViewHolder(binding.root)
-
-
 }
-
 class MaterialView @JvmOverloads constructor(
     context: Context,
     attrSet: AttributeSet? = null,
     a: Int = 0
 ) : FrameLayout(context, attrSet, a) {
 
-    val materialId = ""
-
     val binding: NewMaterialItemBinding
     init {
         binding = NewMaterialItemBinding.inflate(LayoutInflater.from(context), this, true)
     }
 
-    fun setALlText(text: String) {
-        binding.materialEditText.setText(text)
-    }
-
-    fun getMaterialName(): String {
-        return  binding.materialEditText.text.toString()
-    }
 }

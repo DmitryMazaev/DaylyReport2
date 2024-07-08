@@ -65,6 +65,7 @@
     <string name="name_edit_text">введите имя пользователя</string>
     <string name="name_text">ИМЯ ПОЛЬЗОВАТЕЛЯ:</string>
     <string name="zero">0.0</string>
+    <string name="copy_report">СКОПИРОВАТЬ ОТЧЕТ</string>
 
 
     quantity_of_work_text

@@ -25,8 +25,6 @@ class ListReportFragment : Fragment() {
 
     private var _binding: FragmentListReportBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: ListReportViewModel by viewModels()
-    
     private val firebase = FirebaseDatabase.getInstance().getReference("reportList")
 
     override fun onCreateView(
@@ -50,7 +48,6 @@ class ListReportFragment : Fragment() {
                         reportList.add(report!!)
                     }
                 }
-                Log.d("QQQ", reportList.toString())
                 val elementReportAdapter = ElementReportAdapter(reportList) {
                     val bundle = Bundle()
                     bundle.putParcelable(ReportFragment.REPORT_KEY, it)
